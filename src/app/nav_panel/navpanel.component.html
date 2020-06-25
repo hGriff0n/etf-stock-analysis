@@ -1,0 +1,56 @@
+<mat-sidenav-container>
+    <mat-sidenav #appDrawer mode="rail" opened="false">
+        <!-- TODO: Trim down the right padding -->
+        <!-- TODO: Colorize differently -->
+        <mat-nav-list class="dashboard">
+            <!-- TODO: Replace with a more "animated" button -->
+            <a mat-list-item>
+                <button mat-icon-button id="menu" (click)="appDrawer.toggle()">
+                    <mat-icon>menu</mat-icon>
+                </button>
+            </a>
+
+            <mat-divider></mat-divider>
+
+            <!-- TODO: Configure this list in the component (somehow) -->
+
+            <!-- TODO: Search bar would need some minor touches to integrate-->
+            <a mat-list-item>
+                <mat-icon mat-list-icon>search</mat-icon>
+                <input matLine id="search" type="search">
+            </a>
+
+            <a mat-list-item>
+                <mat-icon mat-list-icon>home</mat-icon>
+                <p matLine>Overview</p>
+            </a>
+
+            <a mat-list-item>
+                <mat-icon mat-list-icon>attach_money</mat-icon>
+                <p matLine>Fund</p>
+            </a>
+
+            <a mat-list-item>
+                <mat-icon mat-list-icon>table_view</mat-icon>
+                <p matLine>Holdings</p>
+            </a>
+
+            <a mat-list-item>
+                <mat-icon mat-list-icon>compare_arrows</mat-icon>  <!-- biotech -->
+                <p matLine>Compare</p>
+            </a>
+
+            <a mat-list-item>
+                <mat-icon mat-list-icon>settings</mat-icon>
+                <p matLine>Settings</p>
+            </a>
+
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="container" style="height: 100vh; margin: 0">
+            <ng-content></ng-content>
+        </div>
+
+    </mat-sidenav-content>
+</mat-sidenav-container>
