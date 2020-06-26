@@ -8,6 +8,7 @@ import { DrawerRailModule } from 'angular-material-rail-drawer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NavPanelComponent } from './navpanel.component';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { NavPanelComponent } from './navpanel.component';
     MatListModule,
     MatSidenavModule,
     DrawerRailModule,
-    MatButtonModule
+    MatButtonModule,
+    AppRoutingModule,
   ],
   exports: [
       NavPanelComponent

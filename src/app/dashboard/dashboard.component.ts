@@ -33,11 +33,11 @@ export class DashboardComponent {
       // TODO: Remove this as unnecessary (keep note in case I want to add it in later)
       // https://stackoverflow.com/questions/61449662/what-does-angular-materials-dashboard-schematic-boilerplate-code-do
       return [
-        { title: 'Overview', cols: 9, rows: 4 },
-        { title: 'Scoring', cols: 14, rows: 4 },
-        { title: 'Holdings', cols: 7, rows: 28 },
-        { title: 'News', cols: 22, rows: 6 },
-        { title: 'Graphs', cols: 22, rows: 18 }
+        { title: 'Card 1', cols: 4, rows: 4 },
+        { title: 'Card 2', cols: 4, rows: 4 },
+        { title: 'Card 3', cols: 4, rows: 4 },
+        { title: 'Card 4', cols: 4, rows: 4 },
+        { title: 'Card 5', cols: 4, rows: 4 }
       ];
     })
   );

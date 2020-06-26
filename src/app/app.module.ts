@@ -16,7 +16,9 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppComponent } from './app.component';
 
 import { NavPanelModule } from './nav_panel/navpanel.module';
+import { FundFocusModule } from './fund_focus/fund_focus.module';
 import { OverviewModule } from './overview/overview.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -32,7 +34,9 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     CoreModule,
     AppRoutingModule,
     NavPanelModule,
+    FundFocusModule,
     OverviewModule,
+    DashboardModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

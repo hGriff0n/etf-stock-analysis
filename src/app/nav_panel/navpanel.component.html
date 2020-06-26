@@ -20,17 +20,17 @@
                 <input matLine id="search" type="search">
             </a>
 
-            <a mat-list-item>
+            <a mat-list-item routerLink="/overview" routerLinkActive="active">
                 <mat-icon mat-list-icon>home</mat-icon>
                 <p matLine>Overview</p>
             </a>
 
-            <a mat-list-item>
+            <a mat-list-item routerLink="/fund-focus" routerLinkActive="active">
                 <mat-icon mat-list-icon>attach_money</mat-icon>
                 <p matLine>Fund</p>
             </a>
 
-            <a mat-list-item>
+            <a mat-list-item routerLink="/dash" routerLinkActive="active">
                 <mat-icon mat-list-icon>table_view</mat-icon>
                 <p matLine>Holdings</p>
             </a>
@@ -48,9 +48,8 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <div class="container" style="height: 100vh; margin: 0">
-            <ng-content></ng-content>
-        </div>
-
+        <!-- https://scotch.io/tutorials/angular-2-transclusion-using-ng-content -->
+        <!-- <ng-content select='[router-view]'></ng-content> -->
+        <router-outlet style="height: 100vh; margin: 0" router-view></router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container>
