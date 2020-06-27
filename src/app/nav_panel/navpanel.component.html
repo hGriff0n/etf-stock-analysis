@@ -2,22 +2,18 @@
     <mat-sidenav #appDrawer mode="rail" opened="false">
         <!-- TODO: Trim down the right padding -->
         <!-- TODO: Colorize differently -->
-        <mat-nav-list class="dashboard">
+        <mat-nav-list class="dashboard" #items>
             <!-- TODO: Replace with a more "animated" button -->
-            <a mat-list-item>
-                <button mat-icon-button id="menu" (click)="appDrawer.toggle()">
-                    <mat-icon>menu</mat-icon>
-                </button>
+            <a mat-list-item (click)="appDrawer.toggle()">
+                <mat-icon mat-list-icon>menu</mat-icon>
+                <p matLine>Menu</p>
             </a>
 
             <mat-divider></mat-divider>
 
-            <!-- TODO: Configure this list in the component (somehow) -->
-
-            <!-- TODO: Search bar would need some minor touches to integrate-->
             <a mat-list-item>
-                <mat-icon mat-list-icon>search</mat-icon>
-                <input matLine id="search" type="search">
+                <mat-icon mat-list-icon (click)="appDrawer.toggle()">search</mat-icon>
+                <input matLine id="search" type="search" />
             </a>
 
             <a mat-list-item routerLink="/overview" routerLinkActive="active">
