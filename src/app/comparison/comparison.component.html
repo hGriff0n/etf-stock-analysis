@@ -1,0 +1,11 @@
+<div class="grid-container" style="height: 100%; margin: 0">
+  <mat-grid-list cols="30" rowHeight="fit" style="height: 99vh">
+    <mat-grid-tile *ngFor="let card of cards" [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card class="dashboard-card">
+        <mat-card-content class="dashboard-card-content">
+          <div>{{card.title}}</div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 
 import { NavPanelModule } from './nav_panel/navpanel.module';
 import { FundFocusModule } from './fund_focus/fund_focus.module';
+import { ComparisonModule } from './comparison/comparison.module';
 import { OverviewModule } from './overview/overview.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 
@@ -36,6 +37,7 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
     NavPanelModule,
     FundFocusModule,
     OverviewModule,
+    ComparisonModule,
     DashboardModule,
     TranslateModule.forRoot({
       loader: {
