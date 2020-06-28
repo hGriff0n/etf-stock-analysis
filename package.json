@@ -1,21 +1,12 @@
 {
-  "name": "angular-electron",
-  "version": "7.1.0",
+  "name": "etf-stock-analysis",
+  "version": "0.0.1",
   "description": "Angular 9 with Electron (Typescript + SASS + Hot Reload)",
   "homepage": "https://github.com/maximegris/angular-electron",
   "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
+    "name": "Grayson Hooper"
   },
-  "keywords": [
-    "angular",
-    "angular 9",
-    "electron",
-    "typescript",
-    "eslint",
-    "spectron",
-    "sass"
-  ],
+  "keywords": [],
   "main": "main.js",
   "private": true,
   "scripts": {
