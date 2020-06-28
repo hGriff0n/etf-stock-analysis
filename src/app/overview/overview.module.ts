@@ -7,6 +7,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { RouterModule } from '@angular/router';
 
 import { OverviewComponent } from './overview.component';
 
@@ -18,10 +21,13 @@ import { OverviewComponent } from './overview.component';
     BrowserAnimationsModule,
     MatCardModule,
     MatGridListModule,
+    MatListModule,
+    MatExpansionModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    LayoutModule
+    LayoutModule,
+    RouterModule
   ],
   exports: [
     OverviewComponent

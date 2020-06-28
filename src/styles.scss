@@ -89,3 +89,16 @@ mat-sidenav-content {
     }
   }
 }
+
+.holdings-content {
+  mat-list-item {
+    div.mat-list-item-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      width: 100%;
+      padding: 0 !important;
+    }
+  }
+}
