@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
+import { PluginsService } from '../core/services';
 
 @Component({
   selector: 'overview',
@@ -15,4 +16,8 @@ export class OverviewComponent {
     { title: 'News', cols: 23, rows: 6 },
     { title: 'Graphs', cols: 23, rows: 18 }
   ];
+
+
+  constructor(private plugins: PluginsService) {}
+
 }

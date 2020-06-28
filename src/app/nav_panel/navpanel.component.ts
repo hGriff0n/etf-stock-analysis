@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import { PluginsService } from '../core/services';
 
 @Component({
   selector: 'nav-panel',
@@ -16,4 +17,6 @@ export class NavPanelComponent {
     { icon: 'compare_arrows', text: 'Compare', link: '/compare/SPY/QQQ' },
     { icon: 'settings', text: 'Settings', link: '/overview' },
   ];
+
+  constructor(private plugins: PluginsService) {}
 }

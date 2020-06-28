@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { PluginsService } from '../core/services';
 
 // Best Tutorial
 // https://hoshcoding.com/courses/1/angular-material-grid-list
@@ -27,7 +28,7 @@ export class FundFocusComponent implements OnInit, OnDestroy {
   symbol: string;
   private route_sub: any;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private plugins: PluginsService, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route_sub = this.route.params.subscribe(params => {
