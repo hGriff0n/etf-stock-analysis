@@ -5,6 +5,8 @@ import { join } from 'path';
 import { HoldingPlugin } from '../../plugins/plugin.interface';
 import { RobinhoodPlugin } from '../../plugins/robinhood/plugin';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 // const SystemJS = new System();
 
@@ -38,20 +40,17 @@ export class PluginsService {
     // console.log("loading plugin " + name)
   }
 
-  // TODO: Should be async
-  getHoldings(): { [sybmol: string]: { [id: string]: any } } {
-    let holdings = {}
-    for (let plugin in this.loaded) {
-      if ((this.loaded[plugin] as HoldingPlugin).getHoldings) {
-        let sub_holdings = (this.loaded[plugin] as HoldingPlugin).getHoldings();
-        for (let symbol in sub_holdings) {
-          if (!(symbol in holdings)) {
-            holdings[symbol] = { };
-          }
-          holdings[symbol][plugin] = sub_holdings[symbol];
+  // TODO: Should accomodate many holding plugins
+  getHoldings(): Observable<Record<string, any>> {
+    return (this.loaded['robinhood'] as HoldingPlugin).getHoldings().pipe(map(data => {
+      let holdings = {};
+      for (let symbol in data) {
+        if (!(symbol in holdings)) {
+          holdings[symbol] = {};
         }
+        holdings[symbol]['robinhood'] = data[symbol];
       }
-    }
-    return holdings
+      return holdings;
+    }));
   }
 }

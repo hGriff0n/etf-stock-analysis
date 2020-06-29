@@ -1,5 +1,6 @@
+import { Observable } from "rxjs";
 
 
 export interface HoldingPlugin {
-    getHoldings(): string[];
+    getHoldings(): Observable<Record<string, any>>;
 }

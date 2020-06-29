@@ -1,12 +1,14 @@
-import { Component, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PluginsService } from '../core/services';
+import { Observable, of, defer, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss']
 })
-export class OverviewComponent {
+export class OverviewComponent implements OnInit {
   /** Based on the screen size, switch from standard to one column per row */
   // TODO: Might want to support mobile in future (or ay least dynamic sizing)
   cards = [
@@ -17,38 +19,38 @@ export class OverviewComponent {
     { title: 'Graphs', cols: 23, rows: 18 }
   ];
 
-  // TODO: Load all holdings
-  // TODO: Replace holdings title with search bar
   // TODO: Rework organization of elements
-    // Add "expansion" behavior to see holdings per-brokerage
-    // SYMBOL (name)     $equity  [page]
-    //   robinhood: #shares  cost basis
-  test_holdings = {
-    'MSFT': { quantity: 10, name: 'Microsoft', type: 'stock', price: 43.52, equity: 435.2 },
-    'GOOG': { quantity: 10, name: 'Alphabet', type: 'stock', price: 352.4, equity: 3524 },
-    'F': { quantity: 10, name: 'Ford', type: 'stock', price: 5.234, equity: 52.34 },
+  // Add "expansion" behavior to see holdings per-brokerage
+  // SYMBOL (name)     $equity  [page]
+  //   robinhood: #shares  cost basis
+  constructor(private plugins: PluginsService) {
+    this.holdings = this.plugins.getHoldings()
+      .pipe(map(data => {
+        let holding_cache = {};
+        for (let symbol in data) {
+          holding_cache[symbol] = { price: '', quantity: 0, equity: '', type: '', name: '' };
+          for (let plugin in data[symbol]) {
+            holding_cache[symbol].quantity += parseFloat(data[symbol][plugin]['quantity']);
+            if (!(holding_cache[symbol].type)) {
+              holding_cache[symbol].type = data[symbol][plugin]['type'];
+              holding_cache[symbol].name = data[symbol][plugin]['name'];
+              holding_cache[symbol].price = parseFloat(data[symbol][plugin]['price']);
+            }
+          }
+
+          holding_cache[symbol].equity = (holding_cache[symbol].price * holding_cache[symbol].quantity).toFixed(2);
+          holding_cache[symbol].price = holding_cache[symbol].price.toFixed(2);
+          holding_cache[symbol].quantity = holding_cache[symbol].quantity.toFixed(2);
+        }
+
+        return holding_cache;
+      }));
   }
 
-  constructor(private plugins: PluginsService) {}
-
   // TODO: Move to a separate "Brokerage" service
-  holdings() {
-    let holdings = this.plugins.getHoldings();
-    let holding_cache = {};
-    for (let symbol in holdings) {
-      holding_cache[symbol] = { price: 0, quantity: 0, equity: 0, type: '', name: '' };
-      for (let plugin in holdings[symbol]) {
-        console.log(holdings[symbol][plugin])
-        holding_cache[symbol].quantity += parseFloat(holdings[symbol][plugin]['quantity']);
+  holdings: Observable<Record<string, any>>;
 
-        if (!(holding_cache[symbol].type)) {
-          holding_cache[symbol].type = holdings[symbol][plugin]['type'];
-          holding_cache[symbol].name = holdings[symbol][plugin]['name'];
-          holding_cache[symbol].price = parseFloat(holdings[symbol][plugin]['price']);
-        }
-      }
-      holding_cache[symbol].equity = holding_cache[symbol].price * holding_cache[symbol].quantity;
-    }
-    return holding_cache;
+  ngOnInit() {
+    // this.holdings = this.get_holdings();
   }
 }

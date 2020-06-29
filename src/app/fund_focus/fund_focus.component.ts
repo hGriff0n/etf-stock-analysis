@@ -33,7 +33,7 @@ export class FundFocusComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route_sub = this.route.params.subscribe(params => {
       this.symbol = params['symbol']
-      this.cards[0].title += " (" + this.symbol + ")";
+      this.cards[0].title = this.symbol;
     });
   }
 

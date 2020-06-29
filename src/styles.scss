@@ -92,6 +92,8 @@ mat-sidenav-content {
 
 .holdings-content {
   mat-list-item {
+    height: auto;
+
     div.mat-list-item-content {
       display: flex;
       justify-content: space-between;
@@ -99,6 +101,14 @@ mat-sidenav-content {
       flex-direction: row;
       width: 100%;
       padding: 0 !important;
+    }
+
+    a.to-fund-link {
+      padding: initial;
+    }
+
+    &:hover {
+      box-shadow: 0 0 11px rgba(33,33,33,.2);
     }
   }
 }

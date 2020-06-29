@@ -31,14 +31,18 @@
     <mat-grid-tile [colspan]="7" [rowspan]="28">
       <mat-card class="dashboard-card holdings">
         <mat-card-content class="dashboard-card-content holdings-content">
-          <div>Holdings</div>
+
+          <div>
+              <mat-icon mat-list-icon>search</mat-icon>
+              <input matLine id="holding_search" type="search" />
+          </div>
           <mat-list>
             <!-- TODO: Maybe change this to an accordion later? Give more holding information -->
-            <mat-list-item *ngFor="let item of test_holdings | keyvalue">
+            <mat-list-item *ngFor="let item of (holdings | async) | keyvalue">
               <div style="width: 4ch;">{{ item.key }}</div>
               <div>{{ item.value.quantity }} shares</div>
               <div>${{ item.value.equity }}</div>
-              <a [routerLink]="['/fund-focus/', item.key]" routerLinkActive="active">
+              <a [routerLink]="['/fund-focus/', item.key]" routerLinkActive="active" class="to-fund-link ">
                 <mat-icon mat-list-icon style='justify-self: flex-end;'>read_more</mat-icon>
               </a>
             </mat-list-item>
