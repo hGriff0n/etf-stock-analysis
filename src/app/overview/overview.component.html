@@ -22,8 +22,37 @@
 
     <mat-grid-tile [colspan]="14" [rowspan]="4">
       <mat-card class="dashboard-card scoring">
-        <mat-card-content class="dashboard-card-content scoring-content">
-          <div>Scoring</div>
+        <mat-card-content class="dashboard-card-content scoring-content"
+        style="display: flex; height: 100%">
+          <!-- <div>Scoring</div> -->
+          <!-- TODO: There's also tables -->
+          <!-- This isn't expanding to the parent div -->
+          <!-- <mat-grid-list cols="5" rowHeight="fit">
+            <mat-grid-tile [colspan]="1" [rowspan]="1" *ngFor="let item of scores | keyvalue">
+              <mat-card class="dashboard-card scoring scores">
+                <mat-card-content class="dashboard-card-content scoring-content score-content">
+                  <div>{{ item.key }}</div>
+                </mat-card-content>
+              </mat-card>
+            </mat-grid-tile>
+          </mat-grid-list> -->
+          <!-- <mat-list class="list-horizontal">
+            <mat-list-item *ngFor="let item of scores | keyvalue" class="scoring-item-content">
+              <div>{{ item.key }}</div>
+              <mat-divider></mat-divider>
+              <div>{{ item.value }}</div>
+            </mat-list-item>
+          </mat-list> -->
+          <!-- <table mat-table class="mat-elevation-z8">
+            <ng-container matColumnDef="foo">
+              <th mat-header-cell *matHeaderCellDef>foo</th>
+              <td mat-cell>bar</td>
+            </ng-container> -->
+            <!-- https://dart-lang.github.io/angular_components/#/scorecard -->
+          <div *ngFor="let item of scores | async | keyvalue" style="height: 100%; padding-right: 10px; padding-left: 10px">
+            <div style="height: 50%; width: 100%">{{ item.key | uppercase }}</div>
+            <div style="height: 50%; width: 100%">{{ item.value }}</div>
+          </div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
@@ -31,7 +60,6 @@
     <mat-grid-tile [colspan]="7" [rowspan]="28">
       <mat-card class="dashboard-card holdings">
         <mat-card-content class="dashboard-card-content holdings-content">
-
           <div>
               <mat-icon mat-list-icon>search</mat-icon>
               <input matLine id="holding_search" type="search" />
@@ -59,6 +87,7 @@
       </mat-card>
     </mat-grid-tile>
 
+    <!-- https://material.angular.io/components/tabs/overview -->
     <mat-grid-tile [colspan]="23" [rowspan]="18">
       <mat-card class="dashboard-card overview-graphs">
         <mat-card-content class="dashboard-card-content overview-graphs-content">
