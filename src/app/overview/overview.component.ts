@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { PluginsService } from '../core/services';
+import { PluginsService, UserdataService } from '../core/services';
 import { Observable, of, defer, from } from 'rxjs';
 import { map } from 'rxjs/operators';
+
+/*
+Home page for the user
+
+Various "at-a-glance" pieces of information are shown to the user to give them
+  a sense of how their portfolio is operating. Either via a set of graphs displaying
+  portfolio allocations, a set of user-configured metrics measuring porfolio "fitness",
+  or a list of the raw holdings the user has
+*/
 
 @Component({
   selector: 'overview',
@@ -23,7 +32,7 @@ export class OverviewComponent implements OnInit {
   // Add "expansion" behavior to see holdings per-brokerage
   // SYMBOL (name)     $equity  [page]
   //   robinhood: #shares  cost basis
-  constructor(private plugins: PluginsService) {
+  constructor(private plugins: PluginsService, private userdata: UserdataService) {
     this.holdings = this.plugins.getHoldings()
       .pipe(map(data => {
         let holding_cache = {};
@@ -45,10 +54,15 @@ export class OverviewComponent implements OnInit {
 
         return holding_cache;
       }));
+
+    // TODO: This should be dynamic
+    // this.scores = this.userdata.scores;
+    this.scores = this.userdata.scores;
   }
 
   // TODO: Move to a separate "Brokerage" service
   holdings: Observable<Record<string, any>>;
+  scores: Observable<Record<string, any>>;
 
   ngOnInit() {
     // this.holdings = this.get_holdings();

@@ -2,13 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PluginsService } from '../core/services';
 
-// Best Tutorial
-// https://hoshcoding.com/courses/1/angular-material-grid-list
+/*
+Viewing portal to get information about a specific security
 
-// Also good
-// https://ej2.syncfusion.com/angular/documentation/dashboard-layout/panels/position-sizing-of-panels/
+In particular, various graphs and statistics about the security will be presented to the user
+  along with ui interactions to compare/purchase the funds in supported brokerages. The specific
+  elements and information will be somewhat specialized based on whether the security is a
+  stock or an etf. One example is the display of etf constituent information
+ */
 
-// TODO: What is the "matches" argument?
 @Component({
   selector: 'fund-focus',
   templateUrl: './fund_focus.component.html',

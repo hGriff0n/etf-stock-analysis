@@ -1,6 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { PluginsService } from '../core/services';
 
+/*
+Navigation side bar for navigating around the application
+ */
+
 @Component({
   selector: 'nav-panel',
   templateUrl: './navpanel.component.html',

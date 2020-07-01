@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Breakpoints, BreakpointObserver } from '@angular/cdk/layout';
 
+/*
+Currently a template component to copy for implementing various pages
+ */
+
 // Best Tutorial
 // https://hoshcoding.com/courses/1/angular-material-grid-list
 

@@ -6,6 +6,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+/*
+Plugin to provide integration with the robinhood brokerage firm.
+
+Unfortunately, I haven't been able to get the robinhood apis to work, so this is operating
+  on a downloaded json file (from a separate python script which calls the same endpoints)
+*/
+
 const hardcodedFilePath: string = 'C:\\Users\\ghoop\\Desktop\\holdings\\etf-stock-analysis\\src\\assets\\private\\holdings.json';
 const hardcodedUrl: string = 'assets\\private\\holdings.json';
 

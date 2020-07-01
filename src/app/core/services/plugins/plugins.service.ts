@@ -1,14 +1,18 @@
 import { Injectable, SystemJsNgModuleLoader, Inject } from '@angular/core';
 
-import {readdirSync} from 'fs';
-import { join } from 'path';
 import { HoldingPlugin } from '../../plugins/plugin.interface';
 import { RobinhoodPlugin } from '../../plugins/robinhood/plugin';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-// const SystemJS = new System();
+/*
+Generalized component system to allow for the runtime importing of various plugins, allowing
+  for modular customization and linkage of brokerages and other information sources.
+
+Unfortunately I haven't figured out yet how to actually perform a runtime import so the
+  system is hardcoded for now
+*/
 
 const config = {
   installPath: 'C:\\Users\\ghoop\\Desktop\\holdings\\etf-stock-analysis\\src\\app\\core\\plugins',

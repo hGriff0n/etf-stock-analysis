@@ -2,13 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PluginsService } from '../core/services';
 
-// Best Tutorial
-// https://hoshcoding.com/courses/1/angular-material-grid-list
+/*
+Allows users to compare two different securities against each other
 
-// Also good
-// https://ej2.syncfusion.com/angular/documentation/dashboard-layout/panels/position-sizing-of-panels/
+At the moment, this will only allow for etf comparisons as that is the principal
+  goal of this project. Stock comparison will likely require a full rewrite as the
+  "comparables" are not as easily reduced to a few values
+*/
 
-// TODO: What is the "matches" argument?
 @Component({
   selector: 'fund-comparison',
   templateUrl: './comparison.component.html',
