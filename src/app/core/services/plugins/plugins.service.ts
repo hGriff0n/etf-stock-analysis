@@ -45,6 +45,7 @@ export class PluginsService {
   }
 
   // TODO: Should accomodate many holding plugins
+  // TODO: Should cache information, somehow
   getHoldings(): Observable<Record<string, any>> {
     return (this.loaded['robinhood'] as HoldingPlugin).getHoldings().pipe(map(data => {
       let holdings = {};

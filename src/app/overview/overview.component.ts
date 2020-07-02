@@ -34,6 +34,8 @@ export class OverviewComponent implements OnInit {
   //   robinhood: #shares  cost basis
   constructor(private plugins: PluginsService, private userdata: UserdataService) {
     this.holdings = this.plugins.getHoldings()
+      // TODO: This should probably be (mostly) done in the plugins
+      // Could have cache and recalculate when any "brokerage" link changes
       .pipe(map(data => {
         let holding_cache = {};
         for (let symbol in data) {
