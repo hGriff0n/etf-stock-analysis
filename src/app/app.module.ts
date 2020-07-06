@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import '../polyfills';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CoreModule } from './core/core.module';
@@ -20,10 +20,15 @@ import { FundFocusModule } from './fund_focus/fund_focus.module';
 import { ComparisonModule } from './comparison/comparison.module';
 import { OverviewModule } from './overview/overview.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { ConfigService } from './core/services/config/config.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export function ConfigLoaderFactory(configService: ConfigService) {
+  return () => configService.load();
 }
 
 @NgModule({
@@ -47,7 +52,14 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
       }
     }),
   ],
-  providers: [],
+  providers: [
+    ConfigService, {
+      provide: APP_INITIALIZER,
+      useFactory: ConfigLoaderFactory,
+      multi: true,
+      deps: [ConfigService]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

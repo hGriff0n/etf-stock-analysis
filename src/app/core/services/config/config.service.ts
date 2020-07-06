@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-const hardcodedUrl: string = 'assets\\private\\config.yaml';
+const hardcodedUrl: string = 'assets\\private\\config.json';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ConfigService {
 
-  constructor(private http: HttpClient) {
-    console.log('getting config');
-    http.get(hardcodedUrl)
-      .subscribe(data => {
-        this.values = (data as Record<string, any>);
-        console.log(this.values);
+  constructor(private http: HttpClient) {}
+
+  load(): Promise<any>{
+    console.log("loading");
+    return this.http.get(hardcodedUrl)
+      .toPromise()
+      .then(data => {
+        console.log(data);
+        this.values = data;
       });
   }
 
