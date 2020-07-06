@@ -112,3 +112,18 @@ mat-sidenav-content {
     }
   }
 }
+
+.dashboard-card.fund-name {
+  display: flex;
+
+  .dashboard-card-content {
+    height: 100%;
+    width: 100%;
+
+    img {
+      height: max-content;
+      width: auto;
+      float: left;
+    }
+  }
+}
