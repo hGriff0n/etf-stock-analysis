@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { PluginsService } from '../plugins/plugins.service';
+// import { RobinhoodService } from '../securitydata/robinhood/robinhood.service';
 import { Observable, of, defer, from, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
+// import { RobinhoodService } from '../securitydata/robinhood/robinhood.service';
 
 /*
 Service to track and provide user data and statistics to various components
@@ -31,8 +33,10 @@ const configured_metrics = {
 })
 export class UserdataService {
 
+  // TODO: RobinhoodService doesn't work with typescript yet
+    // Everything from algotrader will have the same issue
   constructor(private plugins: PluginsService) {
-    this.holdings = plugins.getHoldings();
+    this.holdings = this.plugins.getHoldings();
     this.fit = this.holdings
       .pipe(map((holdings: Record<string, any>) => {
           return Object.keys(holdings).reduce((s, h) => {
@@ -59,6 +63,10 @@ export class UserdataService {
         results[0]['fit'] = results[1];
         return results[0];
       }));
+  }
+
+  themes(): string[] {
+    return Object.keys(desired_sectors);
   }
 
   private fit: Observable<number>;
