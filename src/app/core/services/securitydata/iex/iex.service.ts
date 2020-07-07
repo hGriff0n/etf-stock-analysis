@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ConfigService } from '../../config/config.service';
 import { IEXCloudClient } from 'node-iex-cloud';
 import { Observable, from, of } from 'rxjs';
+import { News } from 'node-iex-cloud/lib/types';
 
 @Injectable({
   providedIn: 'root'
@@ -35,6 +36,10 @@ export class IexService {
 
    security(symbol: string): Observable<any> {
      return of(this.iex.symbol(symbol));
+   }
+
+   news(symbol: string, limit: number): Observable<News[]> {
+     return from(this.iex.symbol(symbol).news(limit));
    }
 
    isEtf(symbol: string): Observable<boolean> {
