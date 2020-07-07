@@ -4,6 +4,7 @@ import { PluginsService, SecuritydataService, UserdataService } from '../core/se
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { News } from 'node-iex-cloud/lib/types';
 
 /*
 Viewing portal to get information about a specific security
@@ -66,8 +67,9 @@ export class FundFocusComponent implements OnInit, OnDestroy {
   // Price card
   quote: Observable<Record<string, any>>;
   price: Observable<number>;
-  day_change: Observable<number>;
-  year_change: Observable<number>;
+  day_change: Observable<string>;
+  day_change_pct: Observable<string>;
+  year_change: Observable<string>;
   bid_price: Observable<number>;
   bid_quantity: Observable<number>;
   ask_price: Observable<number>;
@@ -77,6 +79,38 @@ export class FundFocusComponent implements OnInit, OnDestroy {
   pe_ratio: Observable<number>;
   volume: Observable<number>;
   avg_volume: Observable<number>;
+  // industry
+  // sector
+
+  // DIVIDENDS (10)
+  // amount
+  // recordDate
+
+  // EARNINGS (1000)
+  // actualEPS / consensusEPS / fiscalPeriod
+  // yearAgo / yearAgoChangePct
+
+  // ADV STATS (paid only)
+  // EBITDA
+  // beta
+  // currentDebt / grossProfit
+  // debtToEquity / revenuePerEmployee
+  // profitMargin
+  // pegRatio
+  // putCallRatio
+  // priceToBook / priceToSales
+  // enterpriseValueToRevenue
+
+  // To randomize cards, need to make a new type that has a news subobject, plus row/col
+  news: Observable<News[]>;
+
+  stats_table = [
+    { stat: 'P/E Ratio', value: 0 },
+    { stat: 'Volume', value: 1 },
+    { stat: 'Industry', value: 'Telecommunications Equipment' },
+    { stat: 'Sector', value: 'Electronic Technology' },
+    { stat: 'Latest Dividend', value: '$0.02 on Feb 24th, 2019' }
+  ]
 
   ngOnInit() {
     this.route_sub = this.route.params.subscribe(params => {
@@ -89,19 +123,21 @@ export class FundFocusComponent implements OnInit, OnDestroy {
       this.url = company.pipe(map(s => s['website']));
 
       let quote = this.data.quote(this.symbol);
-      // This isn't running????
-      this.price = quote.pipe(map(s => {
-        console.log(s);
-        return s['latestPrice'];
-      }));
-      this.day_change = quote.pipe(map(s => s['changePercent']));
-      this.year_change = quote.pipe(map(s => s['ytdPercent']));
-      this.price = quote.pipe(map(s => s['volume']));
+      this.price = quote.pipe(map(s => s['latestPrice']));
+      this.day_change = quote.pipe(map(s => s['change'].toFixed(2)));
+      this.day_change_pct = quote.pipe(map(s => (s['changePercent'] * 100).toFixed(2)));
+      this.year_change = quote.pipe(map(s => (s['ytdPercent'] || 0).toFixed(2)));
+      this.volume = quote.pipe(map(s => s['volume']));
       this.avg_volume = quote.pipe(map(s => s['avgTotalVolume']));
       this.bid_price = quote.pipe(map(s => s['iexBidPrice']));
       this.bid_quantity = quote.pipe(map(s => s['iexBidSize']));
       this.ask_price = quote.pipe(map(s => s['iexAskPrice']));
       this.ask_quantity = quote.pipe(map(s => s['iexAskSize']));
+
+      this.news = this.data.news(this.symbol, 10).pipe(map(s => {
+        console.log(s);
+        return s;
+      }))
     });
   }
 

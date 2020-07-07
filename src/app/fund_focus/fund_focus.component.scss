@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 .grid-container {
   margin: 20px;
 }
@@ -26,5 +28,21 @@
 .tags-container {
   a:hover {
     letter-spacing: initial;
+  }
+}
+
+.newsItem {
+  @include mat-elevation-transition;
+  @include mat-elevation(2);
+
+  &:hover {
+    @include mat-elevation(5);
+    a {
+      letter-spacing: initial;
+      transition: initial;
+
+      background-color: #ed3330 !important;
+      color: #fff !important;
+    }
   }
 }

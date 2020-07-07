@@ -19,21 +19,22 @@
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="15" [rowspan]="16">
-      <mat-card class="dashboard-card">
+      <mat-card class="dashboard-card graphs-card">
         <mat-card-content class="dashboard-card-content">
           <div>Graphs</div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
 
-    <mat-grid-tile [colspan]="7" [rowspan]="3">
+    <mat-grid-tile [colspan]="9" [rowspan]="3">
       <mat-card class="dashboard-card">
-        <mat-card-content class="dashboard-card-content tags-container">
+        <mat-card-content class="dashboard-card-content tags-container"
+          style="display: flex; justify-content: space-around;">
           <a>{{ themes[0] }}</a>
           <a>Large Cap</a>
           <a>USA</a>
           <!-- <a *ngIf="selected_theme">{{selected_theme}}</a> -->
-            <!-- TODO: The values are showing up UNDER the page?????? -->
+          <!-- TODO: The values are showing up UNDER the page?????? -->
           <!-- <mat-form-field class="example-chip-list" style="width:100%" appearance="fill">
             <mat-select style="background-color: white;">
               <mat-option value="foo">Foo</mat-option>
@@ -46,19 +47,37 @@
       </mat-card>
     </mat-grid-tile>
 
-    <mat-grid-tile [colspan]="8" [rowspan]="3">
+    <mat-grid-tile [colspan]="6" [rowspan]="3">
       <mat-card class="dashboard-card">
-        <mat-card-content class="dashboard-card-content">
-          <div>${{ price | async }}</div>
-          <!-- <div>${{ quote | async }}</div> -->
+        <mat-card-content class="dashboard-card-content quote-card" style="transform: translateY(-6px)">
+          <div>
+            <h1 style="margin: 0; width: fit-content; float: left">${{ price | async }}</h1>
+            <p style="margin: 0"><strong>${{ day_change | async }} ({{ day_change_pct | async }}%)</strong></p>
+            <!-- Can't do the "dollar increase" aspect with years -->
+            <p style="margin: 0">({{ year_change | async }}%</p>
+            <div style="padding-top: 10px">
+              <p style="width: fit-content; float: left; margin: 0">
+                <strong>Bid:</strong> {{ bid_quantity | async }} at ${{ bid_price | async }}
+              </p>
+              <p style="width: fit-content; float: right; margin: 0">
+                <strong>Ask:</strong> {{ ask_quantity | async }} at ${{ ask_price | async }}
+              </p>
+            </div>
+          </div>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
 
+    <!-- Should I include a "purchase" card here too? -->
     <mat-grid-tile [colspan]="15" [rowspan]="9">
       <mat-card class="dashboard-card">
-        <mat-card-content class="dashboard-card-content">
-          <div>Stats</div>
+        <mat-card-content class="dashboard-card-content stats-card">
+          <h1>Statistics</h1>
+          <ul style="list-style: none;">
+            <li *ngFor="let stat of stats_table">
+              <strong>{{ stat.stat }}: </strong>{{ stat.value }}
+            </li>
+          </ul>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
@@ -66,7 +85,15 @@
     <mat-grid-tile [colspan]="30" [rowspan]="12">
       <mat-card class="dashboard-card">
         <mat-card-content class="dashboard-card-content">
-          <div>Reserved</div>
+          <mat-grid-list cols="30" rowHeight="fit" style="height: 36vh" [gutterSize]="'10px'">
+            <mat-grid-tile *ngFor="let story of news | async" [colspan]=5 [rowspan]=4>
+              <mat-card class="cardPardding newsItem"  style="background-color: gray;">
+                <a [href]="story.url">{{ story.headline }}</a>
+                <!-- <img [src]="story.image"/> -->
+                <!-- related -->
+              </mat-card>
+            </mat-grid-tile>
+          </mat-grid-list>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
