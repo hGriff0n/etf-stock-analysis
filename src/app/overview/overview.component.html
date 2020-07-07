@@ -64,9 +64,9 @@
               <mat-icon mat-list-icon>search</mat-icon>
               <input matLine id="holding_search" type="search" />
           </div>
-          <mat-list>
+          <mat-list style="overflow: auto; max-height: 100vh">
             <!-- TODO: Maybe change this to an accordion later? Give more holding information -->
-            <mat-list-item *ngFor="let item of (holdings | async) | keyvalue">
+            <mat-list-item *ngFor="let item of holdings | async | keyvalue">
               <div style="width: 4ch;">{{ item.key }}</div>
               <div>{{ item.value.quantity }} shares</div>
               <div>${{ item.value.equity }}</div>
