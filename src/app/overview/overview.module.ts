@@ -11,8 +11,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { OverviewComponent } from './overview.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { OverviewComponent } from './overview.component';
     MatButtonModule,
     MatTableModule,
     LayoutModule,
-    RouterModule
+    NgxChartsModule,
+    RouterModule,
+    MatTabsModule
   ],
   exports: [
     OverviewComponent

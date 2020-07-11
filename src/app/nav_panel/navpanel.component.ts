@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { PluginsService } from '../core/services';
+import { PluginsService, SearchService } from '../core/services';
+import { Subject } from 'rxjs';
 
 /*
 Navigation side bar for navigating around the application
@@ -22,5 +23,11 @@ export class NavPanelComponent {
     { icon: 'settings', text: 'Settings', link: '/overview' },
   ];
 
-  constructor(private plugins: PluginsService) {}
+  search_results: Object;
+  searchTerm$ = new Subject<string>();
+
+  constructor(private plugins: PluginsService, private search: SearchService) {
+    this.search.search(this.searchTerm$)
+      .subscribe(results => { this.search_results = results; });
+  }
 }

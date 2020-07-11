@@ -62,7 +62,7 @@
         <mat-card-content class="dashboard-card-content holdings-content">
           <div>
               <mat-icon mat-list-icon>search</mat-icon>
-              <input matLine id="holding_search" type="search" />
+              <input matLine id="holding_search" type="search" (keyup)="searchTerm$.next($event.target.value)"/>
           </div>
           <mat-list style="overflow: auto; max-height: 100vh">
             <!-- TODO: Maybe change this to an accordion later? Give more holding information -->
@@ -90,10 +90,30 @@
     <!-- https://material.angular.io/components/tabs/overview -->
     <mat-grid-tile [colspan]="23" [rowspan]="18">
       <mat-card class="dashboard-card overview-graphs">
-        <mat-card-content class="dashboard-card-content overview-graphs-content">
-          <div>Graphs</div>
-        </mat-card-content>
-      </mat-card>
+      <mat-card-content class="dashboard-card-content overview-graphs" style="height:97%">
+        <mat-tab-group selectedIndex="1" class="overview-graph-tabs">
+          <mat-tab label="History">
+            <!-- Can use tabs with router? -->
+            <!-- https://swimlane.github.io/ngx-charts/#/ngx-charts/number-card -->
+
+            <!-- TODO: Find a way to slightly shrink the graph so it's not right against the borders -->
+            <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
+              <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="single" gradient="false" xAxis="true"
+                yAxis="true" showXAxisLabel="true" showYAxisLabel="true" xAxisLabel="Country"
+                yAxisLabel="GDP Per Capita">
+              </ngx-charts-bar-vertical>
+            </div>
+          </mat-tab>
+          <mat-tab label="Makeup">
+            <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
+              <ngx-charts-pie-chart [scheme]="colorScheme" [results]="single" legend="false" explodeSlices="false"
+                doughnut="true" gradient="false">
+              </ngx-charts-pie-chart>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+    </mat-card>
     </mat-grid-tile>
 
   </mat-grid-list>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PluginsService, UserdataService } from '../core/services';
-import { Observable, of, defer, from } from 'rxjs';
+import { PluginsService, UserdataService, SearchService } from '../core/services';
+import { Observable, of, defer, from, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 /*
 Home page for the user
@@ -28,11 +29,14 @@ export class OverviewComponent implements OnInit {
     { title: 'Graphs', cols: 23, rows: 18 }
   ];
 
+  search_results: Object;
+  searchTerm$ = new Subject<string>();
+
   // TODO: Rework organization of elements
   // Add "expansion" behavior to see holdings per-brokerage
   // SYMBOL (name)     $equity  [page]
   //   robinhood: #shares  cost basis
-  constructor(private plugins: PluginsService, private userdata: UserdataService) {
+  constructor(private plugins: PluginsService, private userdata: UserdataService, private router: Router, private search: SearchService) {
     this.holdings = this.plugins.getHoldings()
       // TODO: This should probably be (mostly) done in the plugins
       // Could have cache and recalculate when any "brokerage" link changes
@@ -57,6 +61,9 @@ export class OverviewComponent implements OnInit {
         return holding_cache;
       }));
 
+    this.search.search(this.searchTerm$)
+      .subscribe(results => { this.search_results = results; });
+
     // TODO: This should be dynamic
     // this.scores = this.userdata.scores;
     this.scores = this.userdata.scores;
@@ -69,4 +76,58 @@ export class OverviewComponent implements OnInit {
   ngOnInit() {
     // this.holdings = this.get_holdings();
   }
+
+  // options for the chart
+  timeline = true;
+  colorScheme = {
+    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+  };
+
+  //pie
+  showLabels = true;
+  // data goes here
+public single =[
+  {
+    "name": "Germany",
+    "value": 40632,
+    "extra": {
+      "code": "de"
+    }
+  },
+  {
+    "name": "United States",
+    "value": 50000,
+    "extra": {
+      "code": "us"
+    }
+  },
+  {
+    "name": "France",
+    "value": 36745,
+    "extra": {
+      "code": "fr"
+    }
+  },
+  {
+    "name": "United Kingdom",
+    "value": 36240,
+    "extra": {
+      "code": "uk"
+    }
+  },
+  {
+    "name": "Spain",
+    "value": 33000,
+    "extra": {
+      "code": "es"
+    }
+  },
+  {
+    "name": "Italy",
+    "value": 35800,
+    "extra": {
+      "code": "it"
+    }
+  }
+];
 }
