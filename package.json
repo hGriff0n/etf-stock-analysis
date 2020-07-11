@@ -89,6 +89,7 @@
   "dependencies": {
     "@angular/cli": "9.1.4",
     "@angular/compiler-cli": "9.1.4",
+    "@swimlane/ngx-charts": "14.0.0",
     "angular-material-rail-drawer": "0.0.6",
     "ng-sidebar": "9.3.0",
     "node-iex-cloud": "2.0.31"

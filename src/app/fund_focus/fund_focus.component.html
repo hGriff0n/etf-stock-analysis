@@ -18,14 +18,39 @@
       </mat-card>
     </mat-grid-tile>
 
+    <!-- auxillary routes? -->
+    <!-- https://medium.com/agilix/change-the-route-without-reloading-in-angular-7a4aa82a8d3e -->
+    <!-- ngSwitch -->
     <mat-grid-tile [colspan]="15" [rowspan]="16">
       <mat-card class="dashboard-card graphs-card">
-        <mat-card-content class="dashboard-card-content">
+        <mat-card-content class="dashboard-card-content graph-content" style="height:97%">
           <div>Graphs</div>
+          <mat-tab-group selectedIndex="1" class="fund-graph-tabs">
+            <mat-tab label="History">
+              <!-- Can use tabs with router? -->
+              <!-- https://swimlane.github.io/ngx-charts/#/ngx-charts/number-card -->
+
+              <!-- TODO: Find a way to slightly shrink the graph so it's not right against the borders -->
+              <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
+                <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="single" gradient="false" xAxis="true"
+                  yAxis="true" showXAxisLabel="true" showYAxisLabel="true" xAxisLabel="Country"
+                  yAxisLabel="GDP Per Capita">
+                </ngx-charts-bar-vertical>
+              </div>
+            </mat-tab>
+            <mat-tab label="Makeup">
+              <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
+                <ngx-charts-pie-chart [scheme]="colorScheme" [results]="single" legend="false" explodeSlices="false"
+                  doughnut="true" gradient="false">
+                </ngx-charts-pie-chart>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
 
+    <!--  -->
     <mat-grid-tile [colspan]="9" [rowspan]="3">
       <mat-card class="dashboard-card">
         <mat-card-content class="dashboard-card-content tags-container"
@@ -54,7 +79,7 @@
             <h1 style="margin: 0; width: fit-content; float: left">${{ price | async }}</h1>
             <p style="margin: 0"><strong>${{ day_change | async }} ({{ day_change_pct | async }}%)</strong></p>
             <!-- Can't do the "dollar increase" aspect with years -->
-            <p style="margin: 0">({{ year_change | async }}%</p>
+            <p style="margin: 0">(YTD: {{ year_change | async }}%)</p>
             <div style="padding-top: 10px">
               <p style="width: fit-content; float: left; margin: 0">
                 <strong>Bid:</strong> {{ bid_quantity | async }} at ${{ bid_price | async }}
@@ -68,6 +93,8 @@
       </mat-card>
     </mat-grid-tile>
 
+    <!-- ngx-chart may be what I want (number cards) -->
+    <!-- TODO: There's likely more information that could be gained here -->
     <!-- Should I include a "purchase" card here too? -->
     <mat-grid-tile [colspan]="15" [rowspan]="9">
       <mat-card class="dashboard-card">
@@ -82,12 +109,13 @@
       </mat-card>
     </mat-grid-tile>
 
-    <mat-grid-tile [colspan]="30" [rowspan]="12">
+    <!-- TODO: These "news" stories look ugly -->
+    <mat-grid-tile [colspan]="30" [rowspan]="12" *ngIf="!(is_etf_fund | async)">
       <mat-card class="dashboard-card">
-        <mat-card-content class="dashboard-card-content">
+        <mat-card-content class="dashboard-card-content stock-news-list">
           <mat-grid-list cols="30" rowHeight="fit" style="height: 36vh" [gutterSize]="'10px'">
             <mat-grid-tile *ngFor="let story of news | async" [colspan]=5 [rowspan]=4>
-              <mat-card class="cardPardding newsItem"  style="background-color: gray;">
+              <mat-card class="cardPardding newsItem" style="background-color: gray;">
                 <a [href]="story.url">{{ story.headline }}</a>
                 <!-- <img [src]="story.image"/> -->
                 <!-- related -->
@@ -97,5 +125,27 @@
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
+
+    <!-- TODO: Why is table not showing up? -->
+    <mat-grid-tile [colspan]="30" [rowspan]="12" *ngIf="is_etf_fund | async">
+      <mat-card class="dashboard-card">
+        <mat-card-content class="dashboard-card-content etf-constituents-list" style="display: flex; justify-content: center;">
+          <!-- mat-table doesn't work for some reason (translates to comments) -->
+          <table>
+            <tr>
+              <th *ngFor="let col of displayed_columns">
+                {{ col | uppercase }}
+              </th>
+            </tr>
+            <tr *ngFor="let constituent of constituents">
+              <td>{{ constituent.ticker }}</td>
+              <td>{{ constituent.name }}</td>
+              <td>{{ constituent.weight }}</td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
   </mat-grid-list>
 </div>

@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import '~@angular/material/theming';
 
 /* You can add global styles to this file, and also import other style files */
 html, body {
@@ -125,5 +126,29 @@ mat-sidenav-content {
       width: auto;
       float: left;
     }
+  }
+}
+
+mat-tab-group {
+  position: relative;
+  height: 100%;
+
+  mat-tab-header {
+    position: absolute;
+    bottom: 0;
+  }
+  .mat-tab-body-wrapper {
+    height: 92%;
+    background: beige;
+  }
+  .mat-tab-label {
+    background: antiquewhite;
+  }
+  .mat-tab-label:hover {
+    @include mat-elevation(2);
+  }
+
+  .mat-tab-label.mat-tab-label-active {
+    @include mat-elevation(5);
   }
 }

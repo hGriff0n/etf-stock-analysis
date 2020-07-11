@@ -11,8 +11,10 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select'
 import { OverlayModule } from '@angular/cdk/overlay';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { FundFocusComponent } from './fund_focus.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { FundFocusComponent } from './fund_focus.component';
     MatChipsModule,
     MatFormFieldModule,
     MatSelectModule,
-    OverlayModule
+    OverlayModule,
+    NgxChartsModule,
+    MatTabsModule,
   ],
   exports: [
     FundFocusComponent

@@ -39,7 +39,7 @@ export class FundFocusComponent implements OnInit, OnDestroy {
   constructor(private plugins: PluginsService, private route: ActivatedRoute, private data: SecuritydataService, private user: UserdataService) {
     // TODO: This needs to be a multi-way communication
     this.themes = this.user.themes();
-    console.log(this.themes);
+    // console.log(this.themes);
   }
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
@@ -48,7 +48,7 @@ export class FundFocusComponent implements OnInit, OnDestroy {
   themes: string[];
   selected_theme: string;
   setTheme(event) {
-    console.log(event.value);
+    // console.log(event.value);
     if (event.value == this.NEW_THEME_SELECTOR_VALUE) {
       // MatDialog
       return;
@@ -112,6 +112,15 @@ export class FundFocusComponent implements OnInit, OnDestroy {
     { stat: 'Latest Dividend', value: '$0.02 on Feb 24th, 2019' }
   ]
 
+  displayed_columns = ['symbol', 'name', 'weight']
+  constituents = [
+    { ticker: 'VVV', name: 'VVV Corp', weight: '5' },
+    { ticker: 'AAA', name: 'AAA Corp', weight: '4' },
+    { ticker: 'BBB', name: 'BBB Corp', weight: '8' },
+    { ticker: 'CCC', name: 'CCC Corp', weight: '5' },
+  ]
+
+
   ngOnInit() {
     this.route_sub = this.route.params.subscribe(params => {
       this.symbol = params['symbol'];
@@ -119,7 +128,7 @@ export class FundFocusComponent implements OnInit, OnDestroy {
       let company = this.data.company(this.symbol);
       this.fund_name = company.pipe(map(s => s['companyName']));
       this.description = company.pipe(map(s => s['description']));
-      this.is_etf_fund = company.pipe(map(s => s['issueType'] == 'et'));
+      this.is_etf_fund = company.pipe(map(s => s['issueType'] == 'et' || s['issueType'] == 'te'));
       this.url = company.pipe(map(s => s['website']));
 
       let quote = this.data.quote(this.symbol);
@@ -134,14 +143,64 @@ export class FundFocusComponent implements OnInit, OnDestroy {
       this.ask_price = quote.pipe(map(s => s['iexAskPrice']));
       this.ask_quantity = quote.pipe(map(s => s['iexAskSize']));
 
-      this.news = this.data.news(this.symbol, 10).pipe(map(s => {
-        console.log(s);
-        return s;
-      }))
+      this.news = this.data.news(this.symbol, 10);
     });
   }
 
   ngOnDestroy() {
     this.route_sub.unsubscribe();
   }
+
+  // options for the chart
+  timeline = true;
+  colorScheme = {
+    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+  };
+  //pie
+  showLabels = true;
+  // data goes here
+public single =[
+  {
+    "name": "Germany",
+    "value": 40632,
+    "extra": {
+      "code": "de"
+    }
+  },
+  {
+    "name": "United States",
+    "value": 50000,
+    "extra": {
+      "code": "us"
+    }
+  },
+  {
+    "name": "France",
+    "value": 36745,
+    "extra": {
+      "code": "fr"
+    }
+  },
+  {
+    "name": "United Kingdom",
+    "value": 36240,
+    "extra": {
+      "code": "uk"
+    }
+  },
+  {
+    "name": "Spain",
+    "value": 33000,
+    "extra": {
+      "code": "es"
+    }
+  },
+  {
+    "name": "Italy",
+    "value": 35800,
+    "extra": {
+      "code": "it"
+    }
+  }
+];
 }
