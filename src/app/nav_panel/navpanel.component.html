@@ -11,6 +11,7 @@
 
             <mat-divider></mat-divider>
 
+            <!-- TODO: AppDrawer should open closed by default -->
             <a mat-list-item>
                 <mat-icon mat-list-icon (click)="appDrawer.toggle()">search</mat-icon>
                 <input matLine id="search" type="search" (keyup)="searchTerm$.next($event.target.value)"/>

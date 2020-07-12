@@ -12,9 +12,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select'
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatTabsModule } from '@angular/material/tabs';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { FundFocusComponent } from './fund_focus.component';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [

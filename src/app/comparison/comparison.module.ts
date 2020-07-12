@@ -7,6 +7,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatTabsModule } from '@angular/material/tabs';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { ComparisonComponent } from './comparison.component';
 
@@ -21,7 +23,9 @@ import { ComparisonComponent } from './comparison.component';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    LayoutModule
+    LayoutModule,
+    NgxChartsModule,
+    MatTabsModule,
   ],
   exports: [
     ComparisonComponent
