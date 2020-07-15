@@ -10,12 +10,12 @@ export class ConfigService {
 
   constructor(private http: HttpClient) {}
 
-  load(): Promise<any>{
+  load(): Promise<any> {
     console.log("loading");
     return this.http.get(hardcodedUrl)
       .toPromise()
       .then(data => {
-        console.log(data);
+        console.log("Loaded Configuration: " + data);
         this.values = data;
       });
   }

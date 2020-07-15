@@ -14,6 +14,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { OverviewComponent } from './overview.component';
+import { GraphsModule } from '../../core/components/graphs/graphs.module';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
@@ -22,18 +23,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   ],
   imports: [
     BrowserAnimationsModule,
-    MatCardModule,
-    MatGridListModule,
-    MatListModule,
-    MatExpansionModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTableModule,
-    LayoutModule,
-    NgxChartsModule,
-    RouterModule,
-    MatTabsModule
+    GraphsModule,
+    MatTabsModule,
   ],
   exports: [
     OverviewComponent

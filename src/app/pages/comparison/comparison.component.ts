@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PluginsService, SecuritydataService } from '../core/services';
+import { PluginsService, SecuritydataService } from '../../core/services';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 

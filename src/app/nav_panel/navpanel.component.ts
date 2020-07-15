@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { PluginsService, SearchService } from '../core/services';
+import { PluginsService } from '../core/services';
 import { Subject } from 'rxjs';
 
 /*
@@ -26,8 +26,8 @@ export class NavPanelComponent {
   search_results: Object;
   searchTerm$ = new Subject<string>();
 
-  constructor(private plugins: PluginsService, private search: SearchService) {
-    this.search.search(this.searchTerm$)
-      .subscribe(results => { this.search_results = results; });
+  constructor(private plugins: PluginsService) {
+    // this.search.search(this.searchTerm$)
+    //   .subscribe(results => { this.search_results = results; });
   }
 }

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {FundFocusComponent} from './fund_focus/fund_focus.component';
-import {OverviewComponent} from './overview/overview.component';
-import {ComparisonComponent} from './comparison/comparison.component';
+import {FundFocusComponent} from './pages/fund_focus/fund_focus.component';
+import {OverviewComponent} from './pages/overview/overview.component';
+import {ComparisonComponent} from './pages/comparison/comparison.component';
 import {DashboardComponent} from './dashboard/dashboard.component';
 
 const routes: Routes = [

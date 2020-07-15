@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PluginsService, SecuritydataService, UserdataService } from '../core/services';
+import { PluginsService, SecuritydataService, UserdataService } from '../../core/services';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
