@@ -21,9 +21,6 @@ import { ComparisonModule } from './pages/comparison/comparison.module';
 import { OverviewModule } from './pages/overview/overview.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ConfigService } from './core/services/config/config.service';
-import { GraphsComponent } from './core/components/graphs/graphs.component';
-import { ScorecardComponent } from './core/components/scorecard/scorecard.component';
-import { FundcardComponent } from './core/components/fundcard/fundcard.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {

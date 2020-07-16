@@ -1,0 +1,12 @@
+<div class="fund-snack-container">
+<!-- TODO: Formatting issues if image isn't exactly square -->
+<img src="https://storage.googleapis.com/iex/api/logos/{{ stock.symbol | uppercase }}.png"
+    mat-card-image>
+<div class="data-holder">
+    <h1>{{ stock.name }}</h1>
+    <div class="data-bid">
+        <p><strong>Ask:</strong> {{ stock.askVol }} shares at ${{ stock.ask }}</p>
+        <p><strong>Bid:</strong> {{ stock.bidVol }} shares at ${{ stock.bid }}</p>
+    </div>
+</div>
+</div>
