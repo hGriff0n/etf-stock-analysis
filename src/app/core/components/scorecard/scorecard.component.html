@@ -1,0 +1,12 @@
+
+<!-- <ngx-charts-pie-grid [scheme]="colorScheme" [results]="testData" gradient="false">
+</ngx-charts-pie-grid> -->
+<!-- Styling isn't as i'dve liked, but we'll fix that later -->
+<!-- TODO: Paginate these cards (might not want to in practice) -->
+<!-- https://stackoverflow.com/questions/47326279/how-to-implement-on-scrolldown-pagination-in-angular-4 -->
+<!-- https://www.bluepiit.com/blog/angularjs-infinite-scroll-pagination/ -->
+<div>
+<ngx-charts-number-card *ngIf="data | async as answers" [results]="answers" gradient="false">
+
+</ngx-charts-number-card>
+<div>
