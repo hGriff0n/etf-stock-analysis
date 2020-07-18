@@ -1,0 +1,12 @@
+
+.mat-expansion-panel-header {
+    background: grey !important;
+    mat-panel-title, mat-panel-description {
+        justify-content: space-around;
+        align-items: center;
+
+        h1 {
+            margin: 0;
+        }
+    }
+}

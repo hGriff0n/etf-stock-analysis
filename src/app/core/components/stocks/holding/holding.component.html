@@ -1,0 +1,19 @@
+<mat-expansion-panel hideToggle style="max-width: 500px;">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <h1>{{ symbol }}</h1>
+            <div>{{ name }}</div>
+        </mat-panel-title>
+        <mat-panel-description>
+            <div>{{ quantity }} shares</div>
+            <div>${{ price }}</div>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-list dense style="background: lightgray">
+        <app-broker *ngFor="let broker of brokerages | keyvalue"
+            [broker]="broker.key" [held]="broker.value.held_shares" (change)="onChange($event)"></app-broker>
+    </mat-list>
+    <!-- <mat-action-row>
+        <button mat-button color="primary">Next</button>
+      </mat-action-row> -->
+</mat-expansion-panel>
