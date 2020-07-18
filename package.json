@@ -91,8 +91,11 @@
     "@angular/compiler-cli": "9.1.4",
     "@ncstate/sat-popover": "6.0.0",
     "@swimlane/ngx-charts": "14.0.0",
+    "@syncfusion/ej2-angular-inplace-editor": "18.2.45",
+    "algotrader": "2.5.4",
     "angular-material-rail-drawer": "0.0.6",
     "ng-sidebar": "9.3.0",
+    "node-fetch": "2.6.0",
     "node-iex-cloud": "2.0.31"
   }
 }

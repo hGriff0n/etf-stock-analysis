@@ -11,6 +11,11 @@ html, body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+input,textarea {
+  width: 100%;
+  display: block
+}
+
 // Cause applying in holding.component.css wasn't working, just for this one element though
 input.e-numeric-hidden {
   display: none;
@@ -21,4 +26,10 @@ input.e-numeric-hidden {
   .mat-list-item-content {
       justify-content: space-between;
   }
+}
+
+div.mat-expansion-panel-body {
+  padding: 0;
+  padding-left: 5px;
+  padding-right: 5px;
 }

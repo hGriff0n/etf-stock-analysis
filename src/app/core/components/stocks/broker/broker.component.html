@@ -1,8 +1,9 @@
 <mat-list-item class="broker-split">
-    <div class="broker-name">{{ broker | titlecase }}</div>
+    <div class="broker-name" style="width: 40%">{{ broker | titlecase }}</div>
     <!-- TODO: Add coloring/icons based on inc/dec -->
-    <div *ngIf="delta">{{ delta }}</div>
-    <ejs-inplaceeditor #numericTextBox mode="Inline" [model]="numericTextBoxModel" type="Numeric"
-        [value]='quantity'></ejs-inplaceeditor>
+    <!-- TODO: Would prefer if this didn't "ruin" the formatting -->
+    <div *ngIf="delta" style="padding-right: 10px">{{ delta }}</div>
+    <ejs-inplaceeditor #numericTextBox mode="popup" [model]="numericTextBoxModel" type="Numeric"
+        [value]='quantity'></ejs-inplaceeditor> shares
     <mat-divider [inset]="true"></mat-divider>
 </mat-list-item>
