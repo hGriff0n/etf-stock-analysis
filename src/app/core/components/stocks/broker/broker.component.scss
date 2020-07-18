@@ -1,0 +1,27 @@
+
+.e-hide {
+    visibility: hidden !important;
+    display: none !important;
+}
+
+.e-editable-action-buttons {
+    visibility: hidden !important;
+    display: none !important;
+}
+
+// This only works in styles.scss for some reason
+// input.e-numeric-hidden {
+//     visibility: hidden;
+//     display: none;
+// }
+
+.broker-split {
+    .mat-list-item-content {
+        justify-content: space-between;
+        background: lightgrey;
+    }
+
+    .broker-name {
+        width: 50%;
+    }
+}
