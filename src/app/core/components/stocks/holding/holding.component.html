@@ -1,12 +1,12 @@
 <mat-expansion-panel hideToggle style="max-width: 500px;" cdkDrag>
     <mat-expansion-panel-header>
         <mat-panel-title>
-            <h1>{{ symbol }}</h1>
-            <div>{{ name }}</div>
+            <h3>{{ symbol }}</h3>
+            <!-- <div>{{ name }}</div> -->
         </mat-panel-title>
         <mat-panel-description>
-            <div>{{ quantity }} shares</div>
-            <div>${{ price }}</div>
+            <!-- <div>{{ quantity }} shares</div> -->
+            <div>${{ equity | number: '1.2' }}</div>
         </mat-panel-description>
     </mat-expansion-panel-header>
     <mat-list dense style="background: lightgray">

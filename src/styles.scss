@@ -11,11 +11,6 @@ html, body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-input,textarea {
-  width: 100%;
-  display: block
-}
-
 // Cause applying in holding.component.css wasn't working, just for this one element though
 input.e-numeric-hidden {
   display: none;
