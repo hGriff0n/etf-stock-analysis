@@ -19,6 +19,10 @@
     .mat-list-item-content {
         justify-content: space-between;
         background: lightgrey;
+        height: fit-content;
+    }
+    .mat-list-item-ripple {
+        height: fit-content;
     }
 
     .broker-name {

@@ -51,7 +51,8 @@ export class StockHoldingComponent implements OnInit {
 
     this.change.emit({
       symbol: this.symbol,
-      delta: event.delta * this.price
+      delta: event.delta * this.price,
+      purchase: event.delta,
     });
   }
 

@@ -8,27 +8,36 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatListModule } from '@angular/material/list';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
-import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatExpansionModule } from '@angular/material/expansion';
 
-import { OverviewComponent } from './overview.component';
-import { StocksModule } from '../../core/components/stocks/stocks.module';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { InPlaceEditorModule } from '@syncfusion/ej2-angular-inplace-editor';
+
+import { StockHoldingComponent } from './holding/holding.component';
+import { StocklistComponent } from './stocklist/stocklist.component';
+import { BrokerComponent } from './broker/broker.component';
 
 @NgModule({
   declarations: [
-    OverviewComponent
+    StockHoldingComponent,
+    StocklistComponent,
+    BrokerComponent
   ],
   imports: [
     BrowserAnimationsModule,
-    StocksModule,
-    DragDropModule,
+    MatExpansionModule,
+    MatListModule,
+    InPlaceEditorModule,
+    MatButtonModule,
+    MatIconModule,
+    DragDropModule
   ],
   exports: [
-    OverviewComponent
+    StockHoldingComponent,
+    StocklistComponent
   ]
 })
-export class OverviewModule { }
+export class StocksModule { }
