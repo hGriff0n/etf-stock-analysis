@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { first } from 'rxjs/operators';
+import { UserdataService } from '../../../services';
 
 // Container for HolderComponent that supports drag-and-drop stock movement and expansion
 // Can be easily made more generic if needed in the future
@@ -10,98 +12,32 @@ import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 })
 export class StocklistComponent implements OnInit {
 
-  constructor() { }
+  constructor(private userdata: UserdataService) { }
 
   ngOnInit(): void {
-    this.sub_holdings = this.holdings[this.category];
-    if (!this.sub_holdings) {
+    // This will likely also go one level up (as it runs multiple times)
+    // Though is there any actual extra "cost" in that?
+    this.userdata.holdings.pipe(first()).subscribe(holdings => {
       this.sub_holdings = [];
-    }
+
+      // TODO: The actual storage shouldn't need this hack
+      let category = this.category.toLowerCase();
+      for (let symbol of Object.keys(holdings)) {
+        if (holdings[symbol]['robinhood']['sector'] == category) {
+          this.sub_holdings.push({
+            symbol: symbol
+          })
+        }
+      }
+
+      if (!this.sub_holdings) {
+        this.sub_holdings = [];
+      }
+    });
   }
 
-  // TODO: Move to observables/integrate with security/user-data
   @Input()
   category: string = "Earth & Energy";
-
-  // TODO: Eventually this data will be pushed "up" from the sub-components
-  holdings = {
-    "Earth & Energy": [
-      {
-        symbol: "F",
-        name: "Ford",
-        held: 5,
-        price: 24.53
-      },
-      {
-        symbol: "SDG",
-        name: "Sustainable",
-        held: 7,
-        price: 22.11
-      },
-      {
-        symbol: "KRMA",
-        name: "Karma",
-        held: 3,
-        price: 10
-      },
-      {
-        symbol: "F",
-        name: "Ford",
-        held: 5,
-        price: 24.53
-      },
-      {
-        symbol: "SDG",
-        name: "Sustainable",
-        held: 7,
-        price: 22.11
-      },
-      {
-        symbol: "KRMA",
-        name: "Karma",
-        held: 3,
-        price: 10
-      },
-      {
-        symbol: "F",
-        name: "Ford",
-        held: 5,
-        price: 24.53
-      },
-      {
-        symbol: "SDG",
-        name: "Sustainable",
-        held: 7,
-        price: 22.11
-      },
-      {
-        symbol: "KRMA",
-        name: "Karma",
-        held: 3,
-        price: 10
-      }
-    ],
-    "Software": [
-      {
-        symbol: "GOOG",
-        name: "Alphabet",
-        held: 4,
-        price: 100
-      },
-      {
-        symbol: "QTUM",
-        name: "Quantum ETF",
-        held: 10,
-        price: 30,
-      },
-      {
-        symbol: "BEP",
-        name: "Brookfield Energy",
-        held: 4,
-        price: 40
-      }
-    ]
-  }
   sub_holdings: Array<Record<string, any>>;
 
   equity: number = 0;

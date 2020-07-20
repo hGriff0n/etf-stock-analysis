@@ -24,6 +24,8 @@ export class StockHoldingComponent implements OnInit {
   equity = 0;
   price = 0;
 
+  // TODO: This may be better of being generated from above
+  // We're going to have to call `getHoldings` anyways to know which ones to instantiate
   ngOnInit() {
     this.userdata.getHoldings(this.symbol).pipe(first()).subscribe(holdings => {
       this.brokerages = {};

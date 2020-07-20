@@ -28,3 +28,8 @@ div.mat-expansion-panel-body {
   padding-left: 5px;
   padding-right: 5px;
 }
+
+.mat-grid-tile .mat-figure {
+  justify-content: space-evenly !important;
+  flex-direction: column !important;
+}

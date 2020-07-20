@@ -47,7 +47,7 @@ export class PortfolioComponent implements OnInit {
   // TODO: Need holding information on over
   // TODO: More room between categories for something
   categories = [
-    "Earth & Energy", "Software", "ESG", "Hardware", "Biotech", "Dividends", "Bets", "Consumer", "Automated"
+    "Earth/Energy", "Software", "ESG", "Hardware", "Biotech", "Dividends", "Bets", "Consumer", "Automated"
   ];
 }
 
