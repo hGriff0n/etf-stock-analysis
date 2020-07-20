@@ -19,6 +19,7 @@ import { NavPanelModule } from './nav_panel/navpanel.module';
 import { FundFocusModule } from './pages/fund_focus/fund_focus.module';
 import { ComparisonModule } from './pages/comparison/comparison.module';
 import { OverviewModule } from './pages/overview/overview.module';
+import { PortfolioModule } from './pages/portfolio/portfolio.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ConfigService } from './core/services/config/config.service';
 
@@ -44,6 +45,7 @@ export function ConfigLoaderFactory(configService: ConfigService) {
     OverviewModule,
     ComparisonModule,
     DashboardModule,
+    PortfolioModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

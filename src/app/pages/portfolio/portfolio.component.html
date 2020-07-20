@@ -1,0 +1,29 @@
+<!-- <mat-form-field appearance="fill">
+    <mat-label>Favorite food</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let food of foods" [value]="food.value">
+        {{food.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<div cdkDropListGroup class="Allocation Column"
+    style="height: 100%; justify-content: space-around; width: fit-content; display: flex; flex-direction: column;">
+    <app-stocklist></app-stocklist>
+    <app-stocklist category="Software"></app-stocklist>
+</div> -->
+
+<!-- TODO: How does justify content work with grids? -->
+<mat-grid-list cols="16" rowHeight="2:1" gutterSize="10px" cdkDropListGroup>
+    <mat-grid-tile colspan="8" rowspan="3">
+        <h1>Portfolio Planning<ng-container *ngIf="modifications">*</ng-container></h1>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="8" rowspan="3">To Be Decided</mat-grid-tile>
+    <mat-grid-tile colspan="5" rowspan="17" class="categories">
+        <app-stocklist *ngFor="let category of categories | evenodd: 'odd'" [category]="category"></app-stocklist>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="5" rowspan="17"  class="categories">
+        <app-stocklist *ngFor="let category of categories | evenodd: 'even'" [category]="category"></app-stocklist>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="6" rowspan="17">Watchlist</mat-grid-tile>
+  </mat-grid-list>

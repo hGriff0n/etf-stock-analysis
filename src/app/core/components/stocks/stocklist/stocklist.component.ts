@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 // Container for HolderComponent that supports drag-and-drop stock movement and expansion
@@ -14,10 +14,11 @@ export class StocklistComponent implements OnInit {
 
   ngOnInit(): void {
     this.sub_holdings = this.holdings[this.category];
+    if (!this.sub_holdings) {
+      this.sub_holdings = [];
+    }
   }
 
-  // TODO: Smush holdings to improve density
-  // TODO: Add scroll bar/max-height, padding/justification
   // TODO: Move to observables/integrate with security/user-data
   @Input()
   category: string = "Earth & Energy";
@@ -25,6 +26,42 @@ export class StocklistComponent implements OnInit {
   // TODO: Eventually this data will be pushed "up" from the sub-components
   holdings = {
     "Earth & Energy": [
+      {
+        symbol: "F",
+        name: "Ford",
+        held: 5,
+        price: 24.53
+      },
+      {
+        symbol: "SDG",
+        name: "Sustainable",
+        held: 7,
+        price: 22.11
+      },
+      {
+        symbol: "KRMA",
+        name: "Karma",
+        held: 3,
+        price: 10
+      },
+      {
+        symbol: "F",
+        name: "Ford",
+        held: 5,
+        price: 24.53
+      },
+      {
+        symbol: "SDG",
+        name: "Sustainable",
+        held: 7,
+        price: 22.11
+      },
+      {
+        symbol: "KRMA",
+        name: "Karma",
+        held: 3,
+        price: 10
+      },
       {
         symbol: "F",
         name: "Ford",
@@ -72,8 +109,12 @@ export class StocklistComponent implements OnInit {
   // TODO: How to calculate for styling
   initial_equity: number = 0;
 
+  @Output()
+  change: EventEmitter<Record<string, any>> = new EventEmitter<Record<string, any>>();
+
   onChange(event) {
     this.equity += event.delta
+    // TODO: Send "change holdings" event through `change
   }
 
   enter(event) {
@@ -92,6 +133,7 @@ export class StocklistComponent implements OnInit {
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
+      // TODO: Send "move to theme" event through change
     }
   }
 
