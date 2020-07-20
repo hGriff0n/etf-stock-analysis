@@ -1,4 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+import { UserdataService } from '../../../services';
+import { first } from 'rxjs/operators';
 
 // An individual stock holding for the portfolio page. Expandable to per-brokerage holdings
 // Has up/down integration with a planning service (and/or internal count)
@@ -10,38 +12,43 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
   styleUrls: ['./holding.component.scss']
 })
 export class StockHoldingComponent implements OnInit {
-
+  constructor(private userdata: UserdataService) {}
 
   @Input()
   symbol = "";
-  // TODO: These will likely be produced from SecuritydataService
-  @Input()
-  name = "Ford";
-  @Input()
-  held = 5;
-  @Input()
-  price = 24.53;
 
+  brokerages = {}
+
+  held = 0;
   quantity = 0;
   equity = 0;
-
-  // TODO: Eventually surface from summation of sub-components?
-  brokerages = {
-    robinhood: {
-      held_shares: 3
-    },
-    schwab:  {
-      held_shares: 2
-    }
-  }
+  price = 0;
 
   ngOnInit() {
-    this.quantity = this.held;
-    this.equity = this.held * this.price;
-    this.change.emit({
-      symbol: this.symbol,
-      delta: this.equity
-    })
+    this.userdata.getHoldings(this.symbol).pipe(first()).subscribe(holdings => {
+      this.brokerages = {};
+      this.quantity = 0;
+      this.equity = 0;
+
+      for (let broker of Object.keys(holdings)) {
+        this.equity += parseFloat(holdings[broker].equity);
+
+        let quantity = parseFloat(holdings[broker].quantity);
+        this.quantity += quantity;
+        this.brokerages[broker] = {
+          held_shares: quantity,
+        }
+      }
+
+      this.held = this.quantity;
+      this.price = this.equity / this.quantity;
+
+      this.change.emit({
+        event: "ngOnInit",
+        symbol: this.symbol,
+        delta: this.equity
+      });
+    });
   }
 
   onChange(event) {
@@ -50,6 +57,7 @@ export class StockHoldingComponent implements OnInit {
     this.equity += this.price * event.delta;
 
     this.change.emit({
+      event: "onChange",
       symbol: this.symbol,
       delta: event.delta * this.price,
       purchase: event.delta,

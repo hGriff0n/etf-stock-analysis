@@ -2,19 +2,18 @@
 <!-- mat-accordion -->
 
 
-<mat-expansion-panel hideToggle style="max-width: 300px;">
-    <mat-expansion-panel-header style="background: lightblue">
+<mat-expansion-panel hideToggle>
+    <mat-expansion-panel-header style="background: darkgray">
         <mat-panel-title>
             <h3>{{ category }}</h3>
         </mat-panel-title>
         <mat-panel-description style="align-items: center;">
             <!-- TODO: Should be weight, but that's not calculated atm -->
-            <div style="margin-left: auto; margin-right: 0">{{ equity | number: '1.2' }}%</div>
+            <div style="margin-left: auto; margin-right: 0">{{ equity | number: '1.2' }}</div>
         </mat-panel-description>
     </mat-expansion-panel-header>
     <mat-list cdkDropList (cdkDropListEntered)="enter($event)" (cdkDropListExited)="exit($event)"
-        (cdkDropListDropped)="drop($event)" style="background: lightgreen;" [cdkDropListData]="sub_holdings">
-        <app-holding *ngFor="let h of sub_holdings" (change)="onChange($event)" [symbol]="h.symbol"
-            [name]="h.name" [held]="h.held" [price]="h.price"></app-holding>
+        (cdkDropListDropped)="drop($event)" [cdkDropListData]="sub_holdings">
+        <app-holding *ngFor="let h of sub_holdings" (change)="onChange($event)" [symbol]="h.symbol"></app-holding>
     </mat-list>
 </mat-expansion-panel>

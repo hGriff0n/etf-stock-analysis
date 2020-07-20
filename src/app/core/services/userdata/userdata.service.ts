@@ -65,6 +65,16 @@ export class UserdataService {
       }));
   }
 
+  getHoldings(symbol: string): Observable<Record<string, any>> {
+    return this.holdings.pipe(map(holdings => {
+      if (holdings[symbol]) {
+        return holdings[symbol];
+      }
+
+      return {};
+    }));
+  }
+
   themes(): string[] {
     return Object.keys(desired_sectors);
   }
