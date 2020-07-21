@@ -21,7 +21,7 @@ import { ComparisonModule } from './pages/comparison/comparison.module';
 import { OverviewModule } from './pages/overview/overview.module';
 import { PortfolioModule } from './pages/portfolio/portfolio.module';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { ConfigService } from './core/services/config/config.service';
+import { ConfigService, ReadOnlyDatabaseService } from './core/services/config/config.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -29,6 +29,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
 }
 
 export function ConfigLoaderFactory(configService: ConfigService) {
+  return () => configService.load();
+}
+
+export function ReadOnlyDatabaseLoaderFactory(configService: ReadOnlyDatabaseService) {
   return () => configService.load();
 }
 
@@ -60,6 +64,12 @@ export function ConfigLoaderFactory(configService: ConfigService) {
       useFactory: ConfigLoaderFactory,
       multi: true,
       deps: [ConfigService]
+    },
+    ReadOnlyDatabaseService, {
+      provide: APP_INITIALIZER,
+      useFactory: ReadOnlyDatabaseLoaderFactory,
+      multi: true,
+      deps: [ReadOnlyDatabaseService]
     }
   ],
   bootstrap: [AppComponent]
