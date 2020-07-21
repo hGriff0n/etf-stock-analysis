@@ -36,9 +36,10 @@ export class FundFocusComponent implements OnInit, OnDestroy {
   symbol: string;
   private route_sub: any;
 
-  constructor(private plugins: PluginsService, private route: ActivatedRoute, private data: SecuritydataService, private user: UserdataService) {
+  constructor(private route: ActivatedRoute, private data: SecuritydataService, private user: UserdataService) {
     // TODO: This needs to be a multi-way communication
-    this.themes = this.user.themes();
+    // this.themes = this.user.themes;
+    this.themes = [];
     // console.log(this.themes);
   }
 

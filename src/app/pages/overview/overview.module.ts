@@ -12,6 +12,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { SatPopoverModule } from '@ncstate/sat-popover';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { OverviewComponent } from './overview.component';
@@ -24,8 +25,6 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
   ],
   imports: [
     BrowserAnimationsModule,
-    StocksModule,
-    DragDropModule,
   ],
   exports: [
     OverviewComponent

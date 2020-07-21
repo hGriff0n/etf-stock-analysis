@@ -1,4 +1,5 @@
 import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
+import { ReadOnlyDatabaseService, UserdataService } from '../../core/services';
 
 /*
 Allows users to compare two different securities against each other
@@ -14,11 +15,12 @@ At the moment, this will only allow for etf comparisons as that is the principal
   styleUrls: ['./portfolio.component.scss']
 })
 export class PortfolioComponent implements OnInit {
-  constructor() { }
+  constructor(private user: UserdataService, private db: ReadOnlyDatabaseService) { }
   ngOnInit() {
     for (let plan of this.plan_options) {
       this.modifications[plan] = [];
     }
+    this.categories = Object.keys(this.db.values["themes"]);
   }
 
   // Multiple plan support (deprecated for now)
@@ -37,27 +39,36 @@ export class PortfolioComponent implements OnInit {
     this.modifications[this.selected_plan].append(event);
   }
 
+  // fund tracking
+  brokerages = [ "Robinhood" ];
+  avail_funds = 0;
+  fract_shares = 0;
+
   // watchlist (todo)
   // TODO: Implement Watchlist (SND)
 
   // allocations
   // TODO: Collect from Userdata+Securitydata (FIRST)
+  // TODO: Implement communication events in portfolio page
   // TODO: Need a UI to set desired allocation of categories
   // TODO: Holdings need to be scrunched slightly
   // TODO: Need holding information on over
   // TODO: More room between categories for something
-  categories = [
-    "Earth/Energy", "Software", "ESG", "Hardware", "Biotech", "Dividends", "Bets", "Consumer", "Automated"
-  ];
+  categories: Array<string>;
+  equity: number = 0;
+  getHoldingsInCategory(category: string): Array<string> {
+    return this.db.values["themes"][category]["securities"];
+  }
 }
 
 
 @Pipe({ name: 'evenodd' })
 export class EvenOddPipe implements PipeTransform {
-  transform(value:any[], filter:string) {
-    if(!value || (filter !== 'even' && filter !== 'odd')) {
+  transform(value:any[], filter: number) {
+    if (!value || filter > 2 || filter < 0) {
       return value;
     }
-    return value.filter((item, idx) => filter === 'even' ? idx % 2 === 1 : idx % 2 === 0 );
+
+    return value.filter((item, idx) => idx % 3 == filter);
   }
 }

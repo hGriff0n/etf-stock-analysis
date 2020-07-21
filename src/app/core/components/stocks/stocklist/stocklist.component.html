@@ -8,8 +8,7 @@
             <h3>{{ category }}</h3>
         </mat-panel-title>
         <mat-panel-description style="align-items: center;">
-            <!-- TODO: Should be weight, but that's not calculated atm -->
-            <div style="margin-left: auto; margin-right: 0">{{ equity | number: '1.2' }}</div>
+            <div style="margin-left: auto; margin-right: 0">{{ weight | number: '1.2' }}%</div>
         </mat-panel-description>
     </mat-expansion-panel-header>
     <mat-list cdkDropList (cdkDropListEntered)="enter($event)" (cdkDropListExited)="exit($event)"

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { first } from 'rxjs/operators';
-import { UserdataService } from '../../../services';
+import { UserdataService, ReadOnlyDatabaseService } from '../../../services';
 
 // Container for HolderComponent that supports drag-and-drop stock movement and expansion
 // Can be easily made more generic if needed in the future
@@ -12,7 +12,7 @@ import { UserdataService } from '../../../services';
 })
 export class StocklistComponent implements OnInit {
 
-  constructor(private userdata: UserdataService) { }
+  constructor(private userdata: UserdataService, private db: ReadOnlyDatabaseService) { }
 
   ngOnInit(): void {
     // This will likely also go one level up (as it runs multiple times)
@@ -29,27 +29,32 @@ export class StocklistComponent implements OnInit {
           })
         }
       }
-
-      if (!this.sub_holdings) {
-        this.sub_holdings = [];
-      }
     });
+
+    console.log(this.category);
+    console.log(this.db.values);
+    this.desired = this.db.values[this.category]["desired_allocation"];
   }
+
+  sub_holdings: Array<Record<string, any>>;
 
   @Input()
   category: string = "Earth & Energy";
-  sub_holdings: Array<Record<string, any>>;
+
+  // TODO: This may need to be an observable
+  @Input()
+  total_equity: number = 0;
+  desired: number = 0;
 
   equity: number = 0;
   weight: number = 0;
-  // TODO: How to calculate for styling
-  initial_equity: number = 0;
 
   @Output()
   change: EventEmitter<Record<string, any>> = new EventEmitter<Record<string, any>>();
 
   onChange(event) {
     this.equity += event.delta
+    this.weight = this.equity / this.total_equity;
     // TODO: Send "change holdings" event through `change
   }
 
