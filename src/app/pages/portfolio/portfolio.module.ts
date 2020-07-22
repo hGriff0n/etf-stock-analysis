@@ -10,12 +10,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 
 // import { SatPopoverModule } from '@ncstate/sat-popover';
-import { PortfolioComponent, EvenOddPipe } from './portfolio.component';
+import { PortfolioComponent, TernaryFilterPipe, AllocateFundsDialog, AddExternalDialog } from './portfolio.component';
 import { StocksModule } from '../../core/components/stocks/stocks.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
-    PortfolioComponent, EvenOddPipe
+    PortfolioComponent, TernaryFilterPipe, AllocateFundsDialog, AddExternalDialog
   ],
   imports: [
     BrowserAnimationsModule,
@@ -26,10 +27,14 @@ import { StocksModule } from '../../core/components/stocks/stocks.module';
     MatGridListModule,
     MatInputModule,
     MatDividerModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    AllocateFundsDialog, AddExternalDialog
   ],
   exports: [
-    PortfolioComponent
+    PortfolioComponent, AllocateFundsDialog, AddExternalDialog
   ]
 })
 export class PortfolioModule { }

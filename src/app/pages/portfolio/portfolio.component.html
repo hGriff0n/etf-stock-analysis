@@ -1,18 +1,3 @@
-<!-- <mat-form-field appearance="fill">
-    <mat-label>Favorite food</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let food of foods" [value]="food.value">
-        {{food.viewValue}}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-
-<div cdkDropListGroup class="Allocation Column"
-    style="height: 100%; justify-content: space-around; width: fit-content; display: flex; flex-direction: column;">
-    <app-stocklist></app-stocklist>
-    <app-stocklist category="Software"></app-stocklist>
-</div> -->
-
 <!-- TODO: How does justify content work with grids? -->
 <mat-grid-list cols="16" rowHeight="2:1" gutterSize="10px" cdkDropListGroup>
   <mat-grid-tile colspan="5" rowspan="3">
@@ -24,16 +9,19 @@
           <option *ngFor="let broker of brokerages" [value]="broker">{{ broker | titlecase }}</option>
         </select>
       </mat-form-field>
-      <h2>${{ avail_funds | number : '1.2' }}</h2>
+      <div style="display:flex">
+        <h2>${{ avail_funds | number : '1.2' }}</h2>
+        <h4>${{ total_spent | number: '1.2' }}</h4>
+      </div>
       <!-- TODO: Could actually give a little more information here -->
     </div>
     <div style="display: grid; float: right">
-      <button mat-raised-button>Allocate Funds</button>
-      <button mat-stroked-button>Add External</button>
+      <button mat-raised-button (click)="openAllocateFunds()">Allocate Funds</button>
+      <button mat-raised-button (click)="openAddExternal()">Add External</button>
     </div>
   </div>
     <div style="width: 100%; display: flex; justify-content: space-around;">
-      <div style="width: fit-content">To Fractional Shares</div>
+      <div style="width: fit-content"><strong>To Fractional Shares</strong></div>
       <mat-form-field [style.width.px]=100>
         <input matInput placeholder="Security">
       </mat-form-field>
@@ -49,15 +37,15 @@
   </mat-grid-tile>
   <mat-grid-tile colspan="5" rowspan="3">To Be Decided, scorecard maybe</mat-grid-tile>
   <mat-grid-tile colspan="4" rowspan="17" class="categories">
-    <app-stocklist *ngFor="let category of categories | evenodd: 0" [category]="category" [total_equity]="equity">
+    <app-stocklist *ngFor="let category of categories | ternary: 0" [category]="category" [total_equity]="equity">
     </app-stocklist>
   </mat-grid-tile>
   <mat-grid-tile colspan="4" rowspan="17" class="categories">
-    <app-stocklist *ngFor="let category of categories | evenodd: 1" [category]="category" [total_equity]="equity">
+    <app-stocklist *ngFor="let category of categories | ternary: 1" [category]="category" [total_equity]="equity">
     </app-stocklist>
   </mat-grid-tile>
   <mat-grid-tile colspan="4" rowspan="17" class="categories">
-    <app-stocklist *ngFor="let category of categories | evenodd: 2" [category]="category" [total_equity]="equity">
+    <app-stocklist *ngFor="let category of categories | ternary: 2" [category]="category" [total_equity]="equity">
     </app-stocklist>
   </mat-grid-tile>
   <!-- <mat-grid-tile colspan="4" rowspan="17">Watchlist</mat-grid-tile> -->

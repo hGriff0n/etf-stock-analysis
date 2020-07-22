@@ -3,6 +3,7 @@ import { PluginsService } from '../plugins/plugins.service';
 // import { RobinhoodService } from '../securitydata/robinhood/robinhood.service';
 import { Observable, of, defer, from, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ConfigService } from '../config/config.service';
 // import { RobinhoodService } from '../securitydata/robinhood/robinhood.service';
 
 /*
@@ -35,34 +36,8 @@ export class UserdataService {
 
   // TODO: RobinhoodService doesn't work with typescript yet
     // Everything from algotrader will have the same issue
-  constructor(private plugins: PluginsService) {
+  constructor(private plugins: PluginsService, private config: ConfigService) {
     this.holdings = this.plugins.getHoldings();
-    this.fit = this.holdings
-      .pipe(map((holdings: Record<string, any>) => {
-          return Object.keys(holdings).reduce((s, h) => {
-            if (!(holdings[h]['robinhood']['sector'] in s)) {
-              s[holdings[h]['robinhood']['sector']] = 0;
-            }
-            s[holdings[h]['robinhood']['sector']] += parseFloat(holdings[h]['robinhood']['equity']);
-            return s;
-          }, {})
-      }))
-      .pipe(map((sectors: Record<string, number>) => {
-        let sum: number = Object.values(sectors).reduce((a: number, b: number) => a + b, 0);
-        return Object.keys(sectors)
-          .reduce((s, k: string) => {
-            if (desired_sectors[k] == undefined) {
-              console.log("Ignoring sector " + k + " as the expectations are undefined");
-              return s;
-            }
-            return s + Math.abs(sectors[k] / sum - desired_sectors[k]);
-          }, 0);
-      }));
-    this.scores = forkJoin([of(configured_metrics), this.fit])
-      .pipe(map((results: [Record<string, any>, number]) => {
-        results[0]['fit'] = results[1];
-        return results[0];
-      }));
   }
 
   getHoldings(symbol: string): Observable<Record<string, any>> {
@@ -75,12 +50,5 @@ export class UserdataService {
     }));
   }
 
-  themes(): string[] {
-    return Object.keys(desired_sectors);
-  }
-
-  private fit: Observable<number>;
-
   holdings: Observable<Record<string, any>>;
-  scores: Observable<Record<string, any>>;
 }

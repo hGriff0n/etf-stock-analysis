@@ -22,6 +22,7 @@ import { OverviewModule } from './pages/overview/overview.module';
 import { PortfolioModule } from './pages/portfolio/portfolio.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ConfigService, ReadOnlyDatabaseService } from './core/services/config/config.service';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef } from '@angular/material/dialog';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
@@ -59,6 +60,14 @@ export function ReadOnlyDatabaseLoaderFactory(configService: ReadOnlyDatabaseSer
     }),
   ],
   providers: [
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: { hasBackdrop: false }
+    },
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    },
     ConfigService, {
       provide: APP_INITIALIZER,
       useFactory: ConfigLoaderFactory,
@@ -74,4 +83,4 @@ export function ReadOnlyDatabaseLoaderFactory(configService: ReadOnlyDatabaseSer
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
