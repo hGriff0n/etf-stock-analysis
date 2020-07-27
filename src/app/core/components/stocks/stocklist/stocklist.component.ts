@@ -31,9 +31,7 @@ export class StocklistComponent implements OnInit {
       }
     });
 
-    console.log(this.category);
-    console.log(this.db.values);
-    this.desired = this.db.values[this.category]["desired_allocation"];
+    this.desired = this.db.values['themes'][this.category]["desired_allocation"];
   }
 
   sub_holdings: Array<Record<string, any>>;

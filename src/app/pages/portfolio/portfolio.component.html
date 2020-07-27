@@ -2,24 +2,24 @@
 <mat-grid-list cols="16" rowHeight="2:1" gutterSize="10px" cdkDropListGroup>
   <mat-grid-tile colspan="5" rowspan="3">
     <div style="width: 100%; display: flex; justify-content: space-around;">
-    <div style="width: fit-content; height: 60%; display: grid; float: left; padding-right: 30px">
-      <mat-form-field appearance="fill" [style.width.px]="200">
-        <select matNativeControl required>
-          <option value="total">Total</option>
-          <option *ngFor="let broker of brokerages" [value]="broker">{{ broker | titlecase }}</option>
-        </select>
-      </mat-form-field>
-      <div style="display:flex">
-        <h2>${{ avail_funds | number : '1.2' }}</h2>
-        <h4>${{ total_spent | number: '1.2' }}</h4>
+      <div style="width: fit-content; height: 60%; display: grid; float: left; padding-right: 30px">
+        <mat-form-field appearance="fill" [style.width.px]="200">
+          <select matNativeControl required>
+            <option value="total">Total</option>
+            <option *ngFor="let broker of brokerages" [value]="broker">{{ broker | titlecase }}</option>
+          </select>
+        </mat-form-field>
+        <div style="display:flex">
+          <h2>${{ avail_funds | number : '1.2' }}</h2>
+          <h4>${{ total_spent | number: '1.2' }}</h4>
+        </div>
+        <!-- TODO: Could actually give a little more information here -->
       </div>
-      <!-- TODO: Could actually give a little more information here -->
+      <div style="display: grid; float: right">
+        <button mat-raised-button (click)="openAllocateFunds()">Allocate Funds</button>
+        <button mat-raised-button (click)="openAddExternal()">Add External</button>
+      </div>
     </div>
-    <div style="display: grid; float: right">
-      <button mat-raised-button (click)="openAllocateFunds()">Allocate Funds</button>
-      <button mat-raised-button (click)="openAddExternal()">Add External</button>
-    </div>
-  </div>
     <div style="width: 100%; display: flex; justify-content: space-around;">
       <div style="width: fit-content"><strong>To Fractional Shares</strong></div>
       <mat-form-field [style.width.px]=100>
@@ -33,9 +33,12 @@
   </mat-grid-tile>
   <mat-grid-tile colspan="6" rowspan="3">
     <h1>Portfolio Planning<ng-container *ngIf="modifications">*</ng-container>
+      <!-- Maybe like a holding pen, to move holdings around in the same column -->
     </h1>
   </mat-grid-tile>
   <mat-grid-tile colspan="5" rowspan="3">To Be Decided, scorecard maybe</mat-grid-tile>
+
+  <!-- Allocation cards -->
   <mat-grid-tile colspan="4" rowspan="17" class="categories">
     <app-stocklist *ngFor="let category of categories | ternary: 0" [category]="category" [total_equity]="equity">
     </app-stocklist>
@@ -48,13 +51,47 @@
     <app-stocklist *ngFor="let category of categories | ternary: 2" [category]="category" [total_equity]="equity">
     </app-stocklist>
   </mat-grid-tile>
-  <!-- <mat-grid-tile colspan="4" rowspan="17">Watchlist</mat-grid-tile> -->
+
+  <!-- Watch/search lists -->
   <mat-grid-tile colspan="4" rowspan="17">
+    <mat-accordion class="side-accordion" style="width: 100%; height: 100%">
+      <mat-expansion-panel hideToggle style="width: 100%">
+        <mat-expansion-panel-header style="background: darkgray">
+          <mat-panel-description style="align-items: center; text-align: center">
+            <h3>Search</h3>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-card>
+          <div style="width: 100%; display: flex; align-items: center; padding-bottom: 8px">
+            <input type="text" class="form-control" placeholder="Search" style="border: none; width: 100%"/>
+          </div>
+          <mat-divider></mat-divider>
+          <div #portfolioSearchResults style="padding-top: 10px">
+            <!-- TODO: app-holding if we can identify a specific security -->
+            <app-holding *ngFor="let symbol of possible_funds" [symbol]="symbol"></app-holding>
+            <mat-card *ngFor="let article of news_articles"></mat-card>
+          </div>
+        </mat-card>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel hideToggle [expanded]="true"  style="width: 100%; max-height: 100%;">
+        <mat-expansion-panel-header style="background: darkgray">
+          <mat-panel-description style="align-items: center; text-align: center">
+            <h3>Watchlist</h3>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-list style="height:800px; overflow: scroll">
+          <mat-list cdkDropList [cdkDropListData]="watchlist" (cdkDropListDropped)="addToWatchlist($event)">
+            <app-holding *ngFor="let w of watchlist" [symbol]="w.symbol"></app-holding>
+          </mat-list>
+        </mat-list>
+      </mat-expansion-panel>
+
+    </mat-accordion>
     <!-- <mat-form-field style="width: 100%">
       <input matInput placeholder="Symbol">
     </mat-form-field>
     <mat-divider [inset]="true"></mat-divider> -->
-    Watchlist and Searchlist
     <!-- Make two expandable divs here. One watchlist, one search. Only one is openable at a time -->
   </mat-grid-tile>
 </mat-grid-list>

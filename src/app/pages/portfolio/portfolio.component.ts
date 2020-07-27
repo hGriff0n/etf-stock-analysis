@@ -1,6 +1,7 @@
 import { Component, OnInit, Pipe, PipeTransform, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReadOnlyDatabaseService, UserdataService } from '../../core/services';
+import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 /*
 Allows users to compare two different securities against each other
@@ -16,13 +17,16 @@ At the moment, this will only allow for etf comparisons as that is the principal
   styleUrls: ['./portfolio.component.scss']
 })
 export class PortfolioComponent implements OnInit {
-  // public dialog: MatDialog
+  // TODO: Find something for remaing two "header" boxes
   constructor(private user: UserdataService, private db: ReadOnlyDatabaseService, public dialog: MatDialog) { }
   ngOnInit() {
     for (let plan of this.plan_options) {
       this.modifications[plan] = [];
     }
     this.categories = Object.keys(this.db.values["themes"]);
+    for (let symbol of this.db.values["watchlist"]) {
+      this.watchlist.push({ symbol: symbol });
+    }
   }
 
   // Multiple plan support (deprecated for now)
@@ -36,12 +40,15 @@ export class PortfolioComponent implements OnInit {
   }
 
   // git-style modifications
+  // TODO: Moving holdings should sell everything
   modifications = {};
   addModification(event) {
     this.modifications[this.selected_plan].append(event);
   }
 
   // fund tracking
+  // TODO: Implement fund allocation dialog
+  // TODO: Implement add external (ie. GOOG) dialog
   brokerages = [ "Robinhood" ];
   avail_funds = 0;
   fract_shares = 0;
@@ -69,20 +76,46 @@ export class PortfolioComponent implements OnInit {
     });
   }
 
-  // watchlist (todo)
-  // TODO: Implement Watchlist (SND)
+  // watchlist
+  // TODO: Rework 'app-holding' to work in watchlist and in allocation
+      // Will also likely want theming in watchlist (ie. sub-grouping)
+      // Will also want to be able to set "desired %" on allocation sub-holdings
+  watchlist: Array<Record<string, any>> = [];
+
+  addToWatchlist(event) {
+    if (event.previousContainer == event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+      // TODO: Send "move to watchlist" event through change
+    }
+  }
 
   // allocations
-  // TODO: Implement communication events in portfolio page
-  // TODO: Need a UI to set desired allocation of categories
-  // TODO: Holdings need to be scrunched slightly
-  // TODO: Need holding information on over
-  // TODO: More room between categories for something
+  // TODO: Implement communication events in portfolio page (SND)
+    // init, buy/sell, set_theme, set_desired_weight, pin/unpin?, add/remove
+  // TODO: Fix issue with stocklist ui not updating on enter/exit events
+    // Maybe add/remove on enter/exit (then drop is always reposition)
+  // TODO: Add interaction buttons to allocation/holding components (ie. set allocation/etc.)
+  // TODO: Improve UI density in stocklist components
+    // Holding information can be scrunched a little bit more
+    // Add some security information on holding hover
+    // Add some extra category information to each theme
+  // TODO: Add context menu support for moving holdings
   categories: Array<string>;
-  equity: number = 0;
+  equity: number = 1;
   getHoldingsInCategory(category: string): Array<string> {
     return this.db.values["themes"][category]["securities"];
   }
+
+  // search support
+  // TODO: Implement fund detection algorithm
+  // TODO: Implement news integration
+  possible_funds = ["GOOG"];
+  news_articles = [];
 }
 
 

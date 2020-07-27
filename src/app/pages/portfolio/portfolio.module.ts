@@ -8,6 +8,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 // import { SatPopoverModule } from '@ncstate/sat-popover';
 import { PortfolioComponent, TernaryFilterPipe, AllocateFundsDialog, AddExternalDialog } from './portfolio.component';
@@ -28,7 +33,12 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     MatDividerModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTabsModule,
+    MatListModule,
+    MatExpansionModule,
+    MatCardModule,
+    MatIconModule
   ],
   entryComponents: [
     AllocateFundsDialog, AddExternalDialog

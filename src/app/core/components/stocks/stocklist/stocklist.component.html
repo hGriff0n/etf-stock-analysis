@@ -11,6 +11,8 @@
             <div style="margin-left: auto; margin-right: 0">{{ weight | number: '1.2' }}%</div>
         </mat-panel-description>
     </mat-expansion-panel-header>
+    <!-- TODO: Flesh this out a bit more. Also add some menu/etc. to the holdings to add new brokerages -->
+    <div style="background: red; width: 100%">buttons?</div>
     <mat-list cdkDropList (cdkDropListEntered)="enter($event)" (cdkDropListExited)="exit($event)"
         (cdkDropListDropped)="drop($event)" [cdkDropListData]="sub_holdings">
         <app-holding *ngFor="let h of sub_holdings" (change)="onChange($event)" [symbol]="h.symbol"></app-holding>
