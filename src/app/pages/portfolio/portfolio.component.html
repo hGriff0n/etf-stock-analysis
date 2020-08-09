@@ -40,15 +40,15 @@
 
   <!-- Allocation cards -->
   <mat-grid-tile colspan="4" rowspan="17" class="categories">
-    <app-stocklist *ngFor="let category of categories | ternary: 0" [category]="category" [total_equity]="equity">
+    <app-stocklist *ngFor="let category of categories | ternary: 0" [category]="category" [total_equity]="equity_observable$" (change)="onHoldingEvent($event)">
     </app-stocklist>
   </mat-grid-tile>
   <mat-grid-tile colspan="4" rowspan="17" class="categories">
-    <app-stocklist *ngFor="let category of categories | ternary: 1" [category]="category" [total_equity]="equity">
+    <app-stocklist *ngFor="let category of categories | ternary: 1" [category]="category" [total_equity]="equity_observable$" (change)="onHoldingEvent($event)">
     </app-stocklist>
   </mat-grid-tile>
   <mat-grid-tile colspan="4" rowspan="17" class="categories">
-    <app-stocklist *ngFor="let category of categories | ternary: 2" [category]="category" [total_equity]="equity">
+    <app-stocklist *ngFor="let category of categories | ternary: 2" [category]="category" [total_equity]="equity_observable$" (change)="onHoldingEvent($event)">
     </app-stocklist>
   </mat-grid-tile>
 

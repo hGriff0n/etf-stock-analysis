@@ -6,3 +6,13 @@
     max-height: 400px;
     overflow: scroll;
 }
+
+.allocation {
+    .e-editable-value {
+        margin: 0
+    }
+
+    .e-editable-overlay-icon {
+        display: none;
+    }
+}

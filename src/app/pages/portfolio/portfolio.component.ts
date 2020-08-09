@@ -2,6 +2,7 @@ import { Component, OnInit, Pipe, PipeTransform, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReadOnlyDatabaseService, UserdataService } from '../../core/services';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { of, Observable, BehaviorSubject } from 'rxjs';
 
 /*
 Allows users to compare two different securities against each other
@@ -41,6 +42,7 @@ export class PortfolioComponent implements OnInit {
 
   // git-style modifications
   // TODO: Moving holdings should sell everything
+  // TODO: How to differentiate changing themes from init?
   modifications = {};
   addModification(event) {
     this.modifications[this.selected_plan].append(event);
@@ -95,20 +97,31 @@ export class PortfolioComponent implements OnInit {
   }
 
   // allocations
-  // TODO: Implement communication events in portfolio page (SND)
-    // init, buy/sell, set_theme, set_desired_weight, pin/unpin?, add/remove
-  // TODO: Fix issue with stocklist ui not updating on enter/exit events
-    // Maybe add/remove on enter/exit (then drop is always reposition)
   // TODO: Add interaction buttons to allocation/holding components (ie. set allocation/etc.)
+    // Integrate with event system
   // TODO: Improve UI density in stocklist components
     // Holding information can be scrunched a little bit more
     // Add some security information on holding hover
     // Add some extra category information to each theme
   // TODO: Add context menu support for moving holdings
   categories: Array<string>;
-  equity: number = 1;
+  equity: number = 0;
+  private total_equity = new BehaviorSubject<number>(0);
+  equity_observable$: Observable<number> = this.total_equity.asObservable();
   getHoldingsInCategory(category: string): Array<string> {
     return this.db.values["themes"][category]["securities"];
+  }
+  onHoldingEvent(event) {
+    // init - adding symbol to theme (init and drop)
+    // buy - add shares to symbol
+    // sell - remove shares from symbol
+    // set_theme - setting theme (also removing item from symbol)?
+    console.log(event);
+    if (event.type == "init") {
+      this.equity += event.equity;
+      console.log("Placing " + this.equity);
+      this.total_equity.next(this.equity);
+    }
   }
 
   // search support

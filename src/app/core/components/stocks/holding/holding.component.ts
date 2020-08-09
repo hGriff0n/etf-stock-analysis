@@ -45,10 +45,12 @@ export class StockHoldingComponent implements OnInit {
       this.held = this.quantity;
       this.price = this.equity / this.quantity;
 
+      // Send init event to holding list
       this.change.emit({
-        event: "ngOnInit",
+        type: "init",
         symbol: this.symbol,
-        delta: this.equity
+        equity: this.equity,
+        held: this.quantity,
       });
     });
   }
@@ -58,11 +60,16 @@ export class StockHoldingComponent implements OnInit {
     this.quantity += event.delta;
     this.equity += this.price * event.delta;
 
+    // Send buy/sell event to holding list
+    var type = "buy";
+    if (event.delta < 0) {
+      type = "sell";
+    }
     this.change.emit({
-      event: "onChange",
+      type: type,
       symbol: this.symbol,
-      delta: event.delta * this.price,
-      purchase: event.delta,
+      shares: event.delta,
+      price: this.price,
     });
   }
 
