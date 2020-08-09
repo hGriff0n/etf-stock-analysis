@@ -12,7 +12,7 @@
         </mat-panel-description>
     </mat-expansion-panel-header>
     <!-- TODO: Flesh this out a bit more. Also add some menu/etc. to the holdings to add new brokerages -->
-    <div style="width: 100%; display: flex; justify-content: space-around; align-items: center">
+    <div style="width: 100%; display: flex; justify-content: space-around; align-items: center; background: lightgray">
         <div>Equity: ${{ equity | number: '1.2' }}</div>
         <div class="allocation">Desired: <ejs-inplaceeditor #numericTextBox mode="popup" [model]="numericTextBoxModel"
                 type="Numeric" [value]="desired"></ejs-inplaceeditor>%

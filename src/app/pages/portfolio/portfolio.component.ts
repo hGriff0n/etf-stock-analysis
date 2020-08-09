@@ -40,16 +40,22 @@ export class PortfolioComponent implements OnInit {
     console.log(event);
   }
 
+  // scorecard?
+  // TODO: Decide how "allocation mis-weighting" will be communicated
+  // TODO: Decide what other metrics we could place in here
+  // TODO: Introduce UI styling elements
+
   // git-style modifications
-  // TODO: Moving holdings should sell everything
+  // TODO: Moving holdings should sell everything?
   // TODO: How to differentiate changing themes from init?
+  // TODO: Produce record of all changes
   modifications = {};
   addModification(event) {
     this.modifications[this.selected_plan].append(event);
   }
 
   // fund tracking
-  // TODO: Implement fund allocation dialog
+  // TODO: Implement fund allocation dialog (FST)
   // TODO: Implement add external (ie. GOOG) dialog
   brokerages = [ "Robinhood" ];
   avail_funds = 0;
@@ -97,8 +103,6 @@ export class PortfolioComponent implements OnInit {
   }
 
   // allocations
-  // TODO: Add interaction buttons to allocation/holding components (ie. set allocation/etc.)
-    // Integrate with event system
   // TODO: Improve UI density in stocklist components
     // Holding information can be scrunched a little bit more
     // Add some security information on holding hover
@@ -119,7 +123,10 @@ export class PortfolioComponent implements OnInit {
     console.log(event);
     if (event.type == "init") {
       this.equity += event.equity;
-      console.log("Placing " + this.equity);
+      this.total_equity.next(this.equity);
+    }
+    if (event.type == "buy" || event.type == "sell") {
+      this.equity += event.shares * event.price;
       this.total_equity.next(this.equity);
     }
   }

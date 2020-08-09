@@ -11,6 +11,6 @@
     </mat-expansion-panel-header>
     <mat-list dense style="background: lightgray">
         <app-broker *ngFor="let broker of brokerages | keyvalue"
-            [broker]="broker.key" [held]="broker.value.held_shares" (change)="onChange($event)"></app-broker>
+            [broker]="broker.key" [held]="broker.value.initial_shares" (change)="onChange($event)"></app-broker>
     </mat-list>
 </mat-expansion-panel>

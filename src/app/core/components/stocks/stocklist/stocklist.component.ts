@@ -59,19 +59,23 @@ export class StocklistComponent implements OnInit {
   change: EventEmitter<Record<string, any>> = new EventEmitter<Record<string, any>>();
 
   onChange(event) {
-    this.equity += event.equity
-    this.weight = this.equity / this.total_value;
+    if (event.type == "init") {
+      this.equity += event.equity;
+    } else {
+      this.equity += event.shares * event.price;
+    }
+    this.weight = this.equity / this.total_value * 100;
     this.change.emit(event);
   }
 
   enter(event) {
     this.equity += event.item.__ngContext__[8].equity;
-    this.weight = this.equity / this.total_value;
+    this.weight = this.equity / this.total_value * 100;
   }
 
   exit(event) {
     this.equity -= event.item.__ngContext__[8].equity;
-    this.weight = this.equity / this.total_value;
+    this.weight = this.equity / this.total_value * 100;
   }
 
   drop(event) {
@@ -104,7 +108,7 @@ export class StocklistComponent implements OnInit {
 
   onAllocationChange(event) {
     this.change.emit({
-      type: "set_allocation",
+      type: "set_desired_weight",
       theme: this.category,
       new_allocation: event.value,
     });

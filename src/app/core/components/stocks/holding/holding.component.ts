@@ -39,6 +39,7 @@ export class StockHoldingComponent implements OnInit {
         this.quantity += quantity;
         this.brokerages[broker] = {
           held_shares: quantity,
+          initial_shares: quantity
         }
       }
 
@@ -70,6 +71,7 @@ export class StockHoldingComponent implements OnInit {
       symbol: this.symbol,
       shares: event.delta,
       price: this.price,
+      broker: event.broker
     });
   }
 
