@@ -62,7 +62,7 @@ export function ReadOnlyDatabaseLoaderFactory(configService: ReadOnlyDatabaseSer
   providers: [
     {
       provide: MAT_DIALOG_DEFAULT_OPTIONS,
-      useValue: { hasBackdrop: false }
+      useValue: { hasBackdrop: true }
     },
     {
       provide: MatDialogRef,

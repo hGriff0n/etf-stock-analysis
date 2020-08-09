@@ -58,9 +58,12 @@ export class StocklistComponent implements OnInit {
 
   enter(event) {
     this.equity += event.item.__ngContext__[8].equity;
+    this.weight = this.equity / this.total_equity;
   }
+
   exit(event) {
     this.equity -= event.item.__ngContext__[8].equity;
+    this.weight = this.equity / this.total_equity;
   }
 
   drop(event) {
