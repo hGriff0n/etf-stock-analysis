@@ -5,6 +5,7 @@ import { UserdataService, ReadOnlyDatabaseService } from '../../../services';
 import { InPlaceEditorComponent } from '@syncfusion/ej2-angular-inplace-editor';
 import { NumericTextBoxModel } from '@syncfusion/ej2-inputs';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 // Container for HolderComponent that supports drag-and-drop stock movement and expansion
 // Can be easily made more generic if needed in the future
@@ -15,7 +16,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class StocklistComponent implements OnInit {
 
-  constructor(private userdata: UserdataService, private db: ReadOnlyDatabaseService) { }
+  constructor(private userdata: UserdataService, private db: ReadOnlyDatabaseService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     // This will likely also go one level up (as it runs multiple times)
@@ -116,4 +117,44 @@ export class StocklistComponent implements OnInit {
       new_allocation: event.value,
     });
   }
+
+  showContextMenu(event) {
+    event.stopPropagation();
+    const dialogRef = this.dialog.open(StocklistContextMenu, {
+      width: '200px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("Stocklist Context Menu");
+      console.log(result);
+    })
+  }
+}
+
+
+@Component({
+  selector: 'stocklist_context_menu',
+  templateUrl: './context_menu.html'
+})
+export class StocklistContextMenu implements OnInit {
+  constructor(
+    public dialogRef: MatDialogRef<StocklistContextMenu>) { }
+
+  ngOnInit() {
+    this.dialogRef.beforeClosed().subscribe(() => this.dialogRef.close());
+  }
+
+  onNoClick(): void {
+  }
+
+  select(event) {
+    console.log(event);
+  }
+
+  stocklist_menu = [
+    { text: "Sort" },
+    { text: "Sell All" },
+    { text: "Delete" },
+    { text: "Rename" }
+  ];
+
 }

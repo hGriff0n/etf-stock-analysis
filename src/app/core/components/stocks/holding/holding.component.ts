@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { UserdataService } from '../../../services';
 import { first } from 'rxjs/operators';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
 // An individual stock holding for the portfolio page. Expandable to per-brokerage holdings
 // Has up/down integration with a planning service (and/or internal count)
@@ -12,7 +13,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./holding.component.scss']
 })
 export class StockHoldingComponent implements OnInit {
-  constructor(private userdata: UserdataService) {}
+  constructor(private userdata: UserdataService, public dialog: MatDialog) {}
 
   @Input()
   symbol = "";
@@ -77,7 +78,48 @@ export class StockHoldingComponent implements OnInit {
     });
   }
 
+  // Context Menu
+
+    showContextMenu(event) {
+      event.stopPropagation();
+      const dialogRef = this.dialog.open(HoldingContextMenu, {
+        width: '200px'
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log("Stocklist Context Menu");
+        console.log(result);
+      })
+    }
+
   @Output()
   change: EventEmitter<Record<string, any>> = new EventEmitter<Record<string, any>>();
+
+}
+
+
+@Component({
+  selector: 'holding_context_menu',
+  templateUrl: './context_menu.html'
+})
+export class HoldingContextMenu implements OnInit {
+  constructor(
+    public dialogRef: MatDialogRef<HoldingContextMenu>) { }
+
+  ngOnInit() {
+    this.dialogRef.beforeClosed().subscribe(() => this.dialogRef.close());
+  }
+
+  onNoClick(): void {
+  }
+
+  select(event) {
+    console.log(event);
+  }
+
+  fund_menu = [
+    { text: "Set Category" },
+    { text: "Sell All" },
+    { text: "Open in Focus" }
+  ];
 
 }

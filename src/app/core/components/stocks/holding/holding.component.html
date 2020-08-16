@@ -1,5 +1,5 @@
-<mat-expansion-panel hideToggle style="max-width: 500px;" cdkDrag>
-    <mat-expansion-panel-header style="height: fit-content">
+<mat-expansion-panel hideToggle style="max-width: 500px;" cdkDrag id="holding">
+    <mat-expansion-panel-header style="height: fit-content" (contextmenu)="showContextMenu($event)">
         <mat-panel-title>
             <h3>{{ symbol }}</h3>
             <!-- <div>{{ name }}</div> -->

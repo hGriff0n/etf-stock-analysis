@@ -173,17 +173,16 @@ export class PortfolioComponent implements OnInit {
   }
 
   // allocations
-  // TODO: Add "New Category" buttons (FST)
-  // TODO: Add context menu support to stocklist and holdings (SND)
-    // Sorting holdings by equity/etc.
-    // Moving holdings
-    // Sell all
-    // Delete category
+  // TODO: Hook up context menu events to actually work on individual holdings/etc.
   // TODO: Improve UI density in stocklist components
     // Holding information can be scrunched a little bit more
     // Add some security information on holding hover
     // Add some extra category information to each theme
     // Add ability to annotate categories/holdings with "investment thesis" and priority
+  newCategory(event) {
+    event.stopPropogation();
+    this.categories = [...this.categories, "undefined"];
+  }
   categories: Array<string>;
   equity: number = 0;
   private total_equity = new BehaviorSubject<number>(0);
@@ -220,6 +219,7 @@ export class PortfolioComponent implements OnInit {
   // search support
   // TODO: Implement fund detection algorithm for searching
   // TODO: Implement news integration
+  // TODO: Can't drag GOOG into watchlist/allocations
   possible_funds = ["GOOG"];
   news_articles = [];
 }

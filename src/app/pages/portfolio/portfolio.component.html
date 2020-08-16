@@ -11,7 +11,8 @@
         </mat-form-field>
         <div style="display:flex">
           <h2>${{ funds.available | number : '1.2' }}</h2>
-          <h4>${{ funds.spent | number: '1.2' }}</h4>
+          <h4 style="margin-right: 20px">${{ funds.spent | number: '1.2' }}</h4>
+          <h4 style="margin-right: 20px">${{ funds.sold | number: '1.2' }}</h4>
         </div>
         <!-- TODO: Could actually give a little more information here -->
       </div>
@@ -43,15 +44,15 @@
   </mat-grid-tile>
 
   <!-- Allocation cards -->
-  <mat-grid-tile colspan="4" rowspan="17" class="categories">
+  <mat-grid-tile id="allocation_block" colspan="4" rowspan="17" class="categories" (contextmenu)="newCategory($event)">
     <app-stocklist *ngFor="let category of categories | ternary: 0" [category]="category" [total_equity]="equity_observable$" (change)="onHoldingEvent($event)">
     </app-stocklist>
   </mat-grid-tile>
-  <mat-grid-tile colspan="4" rowspan="17" class="categories">
+  <mat-grid-tile id="allocation_block" colspan="4" rowspan="17" class="categories" (contextmenu)="newCategory($event)">
     <app-stocklist *ngFor="let category of categories | ternary: 1" [category]="category" [total_equity]="equity_observable$" (change)="onHoldingEvent($event)">
     </app-stocklist>
   </mat-grid-tile>
-  <mat-grid-tile colspan="4" rowspan="17" class="categories">
+  <mat-grid-tile id="allocation_block" colspan="4" rowspan="17" class="categories" (contextmenu)="newCategory($event)">
     <app-stocklist *ngFor="let category of categories | ternary: 2" [category]="category" [total_equity]="equity_observable$" (change)="onHoldingEvent($event)">
     </app-stocklist>
   </mat-grid-tile>

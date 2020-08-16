@@ -2,8 +2,8 @@
 <!-- mat-accordion -->
 
 
-<mat-expansion-panel hideToggle>
-    <mat-expansion-panel-header style="background: darkgray">
+<mat-expansion-panel hideToggle id="stocklist">
+    <mat-expansion-panel-header style="background: darkgray" (contextmenu)="showContextMenu($event)">
         <mat-panel-title>
             <h3>{{ category }}</h3>
         </mat-panel-title>
