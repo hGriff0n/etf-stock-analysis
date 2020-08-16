@@ -2,7 +2,7 @@ import { Component, OnInit, Pipe, PipeTransform, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReadOnlyDatabaseService, UserdataService } from '../../core/services';
 import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { of, Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 
 /*
 Allows users to compare two different securities against each other
@@ -18,63 +18,83 @@ At the moment, this will only allow for etf comparisons as that is the principal
   styleUrls: ['./portfolio.component.scss']
 })
 export class PortfolioComponent implements OnInit {
-  // TODO: Find something for remaing two "header" boxes
   constructor(private user: UserdataService, private db: ReadOnlyDatabaseService, public dialog: MatDialog) { }
   ngOnInit() {
-    for (let plan of this.plan_options) {
-      this.modifications[plan] = [];
-    }
     this.categories = Object.keys(this.db.values["themes"]);
     for (let symbol of this.db.values["watchlist"]) {
       this.watchlist.push({ symbol: symbol });
     }
   }
 
-  // Multiple plan support (deprecated for now)
-  plan_options = [
-    "Start New Plan",
-    "Plan sds"
-  ]
-  selected_plan = "Start New Plan";
-  changePlan(event) {
-    console.log(event);
-  }
-
   // scorecard?
-  // TODO: Decide how "allocation mis-weighting" will be communicated
-  // TODO: Decide what other metrics we could place in here
+  // TODO: Hook up processors to actually update the values (5th)
+  // TODO: Improve styling of values/labels
   // TODO: Introduce UI styling elements
 
   // git-style modifications
-  // TODO: Moving holdings should sell everything?
-  // TODO: How to differentiate changing themes from init?
-  // TODO: Produce record of all changes
-  modifications = {};
+  // TODO: Enable "undo" behavior, at least theoretically
+  modifications = [];
   addModification(event) {
-    this.modifications[this.selected_plan].append(event);
+    // Technically, we receive init events throughout the execution
+    // However, for modification tracking they're only relevant at the start
+    if (event.type == "init") {
+      if (this.modifications.length == 0) {
+        this.modifications[0] = {
+          type: "initial_state",
+          holdings: {}
+        }
+
+      }
+
+      if (this.modifications.length == 1) {
+        if (!(event.category in this.modifications[0].holdings)) {
+          this.modifications[0].holdings[event.category] = [];
+        }
+
+        this.modifications[0].holdings[event.category].push({
+          symbol: event.symbol,
+          equity: event.equity,
+          shares: event.held
+        });
+      }
+
+    } else {
+      this.modifications.push(event);
+    }
   }
 
   // fund tracking
-  // TODO: Implement fund allocation dialog (FST)
   // TODO: Implement add external (ie. GOOG) dialog
-  brokerages = [ "Robinhood" ];
-  avail_funds = 0;
+  // TODO: Need to split sold equity by broker (3RD)
+  brokerages = ["Robinhood"];
   fract_shares = 0;
-  total_spent = 0;
+  funds = {
+    added: 0,
+    sold: 0,
+    spent: 0,
+    available: 0,
+  }
   openAllocateFunds() {
     const dialogRef = this.dialog.open(AllocateFundsDialog, {
-      width: '250px',
-      data: {}
+      width: '300px',
+      data: { added_funds: this.funds.added, total_available: this.funds.available, spent: {} }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log("The AllocateFundsDialog was closed");
-      console.log(result);
+      this.addModification({
+        type: "add_funds",
+        amount: result.added_funds,
+        old_amount: this.funds.added
+      });
+
+      this.funds.added = result.added_funds;
+      this.funds.available = this.funds.added + this.funds.sold - this.funds.spent;
     });
   }
   openAddExternal() {
+    console.log(this.modifications);
     const dialogRef = this.dialog.open(AddExternalDialog, {
-      width: '250px',
+      width: '500px',
       data: {}
     });
 
@@ -83,11 +103,24 @@ export class PortfolioComponent implements OnInit {
       console.log(result);
     });
   }
+  private recalculateFunds() {
+    this.funds.sold = 0;
+    this.funds.spent = 0;
+    for (let symbol of Object.keys(this.transactions)) {
+      if (this.transactions[symbol].delta < 0) {
+        this.funds.sold += this.transactions[symbol].delta * this.transactions[symbol].price;
+      } else {
+        this.funds.spent += this.transactions[symbol].delta * this.transactions[symbol].price;
+      }
+    }
+    this.funds.available = this.funds.added + this.funds.sold - this.funds.spent;
+    console.log(this.funds);
+  }
 
   // watchlist
   // TODO: Rework 'app-holding' to work in watchlist and in allocation
-      // Will also likely want theming in watchlist (ie. sub-grouping)
-      // Will also want to be able to set "desired %" on allocation sub-holdings
+    // Will also likely want theming in watchlist (ie. sub-grouping)
+    // Will also want to be able to set "desired %" on allocation sub-holdings
   watchlist: Array<Record<string, any>> = [];
 
   addToWatchlist(event) {
@@ -95,23 +128,30 @@ export class PortfolioComponent implements OnInit {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
       // TODO: Send "move to watchlist" event through change
     }
   }
 
   // allocations
+  // TODO: Add "New Category" buttons (FST)
+  // TODO: Add context menu support to stocklist and holdings (SND)
+    // Sorting holdings by equity/etc.
+    // Moving holdings
+    // Sell all
+    // Delete category
   // TODO: Improve UI density in stocklist components
     // Holding information can be scrunched a little bit more
     // Add some security information on holding hover
     // Add some extra category information to each theme
-  // TODO: Add context menu support for moving holdings
+    // Add ability to annotate categories/holdings with "investment thesis" and priority
   categories: Array<string>;
   equity: number = 0;
   private total_equity = new BehaviorSubject<number>(0);
   equity_observable$: Observable<number> = this.total_equity.asObservable();
+  transactions: Record<string, Record<string, any>> = {};
   getHoldingsInCategory(category: string): Array<string> {
     return this.db.values["themes"][category]["securities"];
   }
@@ -120,19 +160,28 @@ export class PortfolioComponent implements OnInit {
     // buy - add shares to symbol
     // sell - remove shares from symbol
     // set_theme - setting theme (also removing item from symbol)?
-    console.log(event);
+    // console.log(event);
     if (event.type == "init") {
       this.equity += event.equity;
       this.total_equity.next(this.equity);
     }
     if (event.type == "buy" || event.type == "sell") {
-      this.equity += event.shares * event.price;
+      this.equity += (event.shares - event.remove) * event.price;
       this.total_equity.next(this.equity);
+      this.transactions[event.symbol] = {
+        delta: event.shares,
+        price: event.price
+      }
+
+      console.log(this.transactions);
+      this.recalculateFunds();
     }
+
+    this.addModification(event);
   }
 
   // search support
-  // TODO: Implement fund detection algorithm
+  // TODO: Implement fund detection algorithm for searching
   // TODO: Implement news integration
   possible_funds = ["GOOG"];
   news_articles = [];
@@ -141,7 +190,7 @@ export class PortfolioComponent implements OnInit {
 
 @Pipe({ name: 'ternary' })
 export class TernaryFilterPipe implements PipeTransform {
-  transform(value:any[], filter: number) {
+  transform(value: any[], filter: number) {
     if (!value || filter > 2 || filter < 0) {
       return value;
     }
@@ -150,23 +199,60 @@ export class TernaryFilterPipe implements PipeTransform {
   }
 }
 
-export interface AllocateFundsData {}
+export interface AllocateFundsData {
+  added_funds: number;
+  total_available: number;
+  spent: Record<string, number>;
+}
 
+// TODO: Add displays of division/etc.
 @Component({
   selector: 'porfolio-allocate-funds-dialog',
   templateUrl: './allocate_funds_dialog.html'
 })
-export class AllocateFundsDialog {
+export class AllocateFundsDialog implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AllocateFundsDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: AllocateFundsData) {}
+    @Inject(MAT_DIALOG_DATA) public data: AllocateFundsData) { }
+
+  ngOnInit() {
+    let spent_funds = 0;
+    this.graph_data = [];
+    for (let broker of Object.keys(this.data.spent)) {
+      this.graph_data.push({
+        "name": broker,
+        "value": this.data.spent[broker]
+      });
+      spent_funds += this.data.spent[broker];
+    }
+    if (spent_funds < this.data.total_available) {
+      this.graph_data.push({
+        "name": "unspent",
+        "value": this.data.total_available - spent_funds
+      });
+    }
+    this.dialogRef.beforeClosed().subscribe(() => this.dialogRef.close(this.data));
+  }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    console.log(this.data);
+    this.dialogRef.close(this.data);
   }
+
+  changeFunds() {
+    console.log(this.data.added_funds);
+  }
+
+  colorScheme = {
+    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+  };
+  showLabels = true;
+
+  graph_data: Record<string, any>[] = [{ "name": "robinhood", "value": 150 }, { "name": "schwab", "value": 250 }, { "name": "unspent", "value": 27.5 }];
+  update$ = new Subject<any>();
 }
 
-export interface AddExternalData {}
+export interface AddExternalData { }
 
 @Component({
   selector: 'porfolio-add-external-dialog',
@@ -175,7 +261,7 @@ export interface AddExternalData {}
 export class AddExternalDialog {
   constructor(
     public dialogRef: MatDialogRef<AddExternalDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: AddExternalData) {}
+    @Inject(MAT_DIALOG_DATA) public data: AddExternalData) { }
 
   onNoClick(): void {
     this.dialogRef.close();

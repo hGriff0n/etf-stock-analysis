@@ -10,8 +10,8 @@
           </select>
         </mat-form-field>
         <div style="display:flex">
-          <h2>${{ avail_funds | number : '1.2' }}</h2>
-          <h4>${{ total_spent | number: '1.2' }}</h4>
+          <h2>${{ funds.available | number : '1.2' }}</h2>
+          <h4>${{ funds.spent | number: '1.2' }}</h4>
         </div>
         <!-- TODO: Could actually give a little more information here -->
       </div>

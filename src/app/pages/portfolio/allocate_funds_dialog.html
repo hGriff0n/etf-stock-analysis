@@ -1,3 +1,10 @@
-<h1 mat-dialog-title>Allocate Funds</h1>
-<div mat-dialog-content>
-</div>
+<mat-card style="background-color: white;">
+    <h1 mat-dialog-title>Allocate Funds</h1>
+    <div style="display:flex">
+        <mat-form-field style="width: 100%; display: flex; margin:15px">
+            <input matInput type="number" [(ngModel)]="data.added_funds"
+                style="padding: 10px; border: 1px solid #ccc; background-color: #fff;">
+            <button mat-raised-button (click)="changeFunds()">Submit</button>
+        </mat-form-field>
+    </div>
+</mat-card>

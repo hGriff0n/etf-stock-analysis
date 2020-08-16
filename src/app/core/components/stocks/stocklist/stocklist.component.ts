@@ -36,7 +36,6 @@ export class StocklistComponent implements OnInit {
 
     this.desired = this.db.values['themes'][this.category]["desired_allocation"];
     this.total_equity.subscribe(total => {
-      console.log(total);
       this.total_value = total;
       this.weight = this.equity / this.total_value * 100;
     });
@@ -65,6 +64,8 @@ export class StocklistComponent implements OnInit {
       this.equity += event.shares * event.price;
     }
     this.weight = this.equity / this.total_value * 100;
+
+    event["category"] = this.category;
     this.change.emit(event);
   }
 
@@ -87,9 +88,11 @@ export class StocklistComponent implements OnInit {
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
+      console.log(event);
       this.change.emit({
         type: "set_theme",
         symbol: event.container.data[event.currentIndex].symbol,
+        category: this.category
       });
     }
   }

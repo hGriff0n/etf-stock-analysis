@@ -57,8 +57,9 @@ export class StockHoldingComponent implements OnInit {
   }
 
   onChange(event) {
-    this.brokerages[event.broker].held_shares += event.delta;
-    this.quantity += event.delta;
+    let old_held = this.brokerages[event.broker].held_shares;
+    this.brokerages[event.broker].held_shares = this.brokerages[event.broker].initial_shares + event.delta;
+    this.quantity = this.quantity - old_held + this.brokerages[event.broker].held_shares;
     this.equity += this.price * event.delta;
 
     // Send buy/sell event to holding list
@@ -71,7 +72,8 @@ export class StockHoldingComponent implements OnInit {
       symbol: this.symbol,
       shares: event.delta,
       price: this.price,
-      broker: event.broker
+      broker: event.broker,
+      remove: old_held - this.brokerages[event.broker].initial_shares
     });
   }
 
