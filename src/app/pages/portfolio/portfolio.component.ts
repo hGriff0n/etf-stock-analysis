@@ -30,6 +30,43 @@ export class PortfolioComponent implements OnInit {
   // TODO: Hook up processors to actually update the values (5th)
   // TODO: Improve styling of values/labels
   // TODO: Introduce UI styling elements
+    // multiple "pages", maybe in a carousel
+  // TODO: Move into scorecard component
+  scorecard = [
+    {
+      name: "Allocation",
+      value: 1
+    },
+    {
+      name: "Expense Ratio",
+      value: 2
+    },
+    {
+      name: "Dividend Yield",
+      value: 3
+    },
+    {
+      name: "Carbon Load",
+      value: 4
+    },
+    {
+      name: "ESG",
+      value: 5
+    },
+    {
+      name: "Geography",
+      value: 6
+    }
+  ];
+  colorScheme = {
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  };
+  scorecardLabelFormatting(c): string {
+    return `${c.label}`
+  }
+  scorecardValueFormatting(c): string {
+    return c.value.toLocaleString()
+  }
 
   // git-style modifications
   // TODO: Enable "undo" behavior, at least theoretically

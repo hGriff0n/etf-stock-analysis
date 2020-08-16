@@ -22,6 +22,7 @@
     </div>
     <div style="width: 100%; display: flex; justify-content: space-around;">
       <div style="width: fit-content"><strong>To Fractional Shares</strong></div>
+      <!-- TODO: The placeholders don't go away when -->
       <mat-form-field [style.width.px]=100>
         <input matInput placeholder="Security">
       </mat-form-field>
@@ -36,7 +37,10 @@
       <!-- Maybe like a holding pen, to move holdings around in the same column -->
     </h1>
   </mat-grid-tile>
-  <mat-grid-tile colspan="5" rowspan="3">To Be Decided, scorecard maybe</mat-grid-tile>
+  <mat-grid-tile colspan="5" rowspan="3">
+    <ngx-charts-number-card [scheme]="colorScheme" [results]="scorecard" [valueFormatting]="scorecardValueFormatting"
+      [labelFormatting]="scorecardLabelFormatting" animations="true"></ngx-charts-number-card>
+  </mat-grid-tile>
 
   <!-- Allocation cards -->
   <mat-grid-tile colspan="4" rowspan="17" class="categories">
