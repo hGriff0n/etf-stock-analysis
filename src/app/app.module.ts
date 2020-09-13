@@ -20,7 +20,6 @@ import { FundFocusModule } from './pages/fund_focus/fund_focus.module';
 import { ComparisonModule } from './pages/comparison/comparison.module';
 import { OverviewModule } from './pages/overview/overview.module';
 import { PortfolioModule } from './pages/portfolio/portfolio.module';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { ConfigService, ReadOnlyDatabaseService } from './core/services/config/config.service';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialogRef } from '@angular/material/dialog';
 
@@ -49,7 +48,6 @@ export function ReadOnlyDatabaseLoaderFactory(configService: ReadOnlyDatabaseSer
     FundFocusModule,
     OverviewModule,
     ComparisonModule,
-    DashboardModule,
     PortfolioModule,
     TranslateModule.forRoot({
       loader: {

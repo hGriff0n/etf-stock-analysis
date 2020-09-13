@@ -18,7 +18,7 @@ export class ScorecardComponent implements OnInit {
 
   // TODO: How to incorporate color scheme?
   // colorScheme = {
-  //   domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+    // domain: ['#cdb17e', '#19212a', '#716859', '#8c9496', '#463f38', '#8a8c94']
   // };
   ngOnInit() {
     this.data = this.testData
@@ -46,11 +46,11 @@ export class ScorecardComponent implements OnInit {
       "value": 36240,
     },
     {
-      "name": "Spain",
+      "name": "Carbon Load",
       "value": 33000,
     },
     {
-      "name": "Italy",
+      "name": "Diversity",
       "value": "Italian",
     }
   ]);
