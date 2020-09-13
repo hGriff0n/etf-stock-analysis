@@ -13,7 +13,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
   styleUrls: ['./holding.component.scss']
 })
 export class StockHoldingComponent implements OnInit {
-  constructor(private userdata: UserdataService, public dialog: MatDialog) {}
+  constructor(private userdata: UserdataService, public dialog: MatDialog) { }
 
   @Input()
   symbol = "";
@@ -71,25 +71,52 @@ export class StockHoldingComponent implements OnInit {
     this.change.emit({
       type: type,
       symbol: this.symbol,
-      shares: event.delta,
+      old_shares: old_held,
+      new_shares: this.brokerages[event.broker].held_shares,
+      delta: event.delta,
       price: this.price,
       broker: event.broker,
-      remove: old_held - this.brokerages[event.broker].initial_shares
     });
   }
 
   // Context Menu
-
-    showContextMenu(event) {
-      event.stopPropagation();
-      const dialogRef = this.dialog.open(HoldingContextMenu, {
-        width: '200px'
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log("Stocklist Context Menu");
-        console.log(result);
-      })
-    }
+  showContextMenu(event) {
+    event.stopPropagation();
+    const dialogRef = this.dialog.open(HoldingContextMenu, {
+      width: '200px'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      switch (result) {
+        case "Sell All": {
+          for (let broker of Object.keys(this.brokerages)) {
+            this.change.emit({
+              type: "sell",
+              symbol: this.symbol,
+              old_shares: this.brokerages[broker].held_shares,
+              new_shares: 0,
+              delta: -this.brokerages[broker].held_shares,
+              price: this.price,
+              broker: broker,
+            });
+          }
+          this.brokerages = [];
+          break;
+        }
+        case "Open in Focus": {
+          // router.send
+          console.log("TODO: Add router connection")
+          break;
+        }
+        case "Add Broker": {
+          this.brokerages["new brokerage"] = { held_shares: 0, initial_shares: 0 };
+          break;
+        }
+        default: { break; }
+      }
+      console.log("Stocklist Context Menu");
+      console.log(result);
+    })
+  }
 
   @Output()
   change: EventEmitter<Record<string, any>> = new EventEmitter<Record<string, any>>();
@@ -101,23 +128,16 @@ export class StockHoldingComponent implements OnInit {
   selector: 'holding_context_menu',
   templateUrl: './context_menu.html'
 })
-export class HoldingContextMenu implements OnInit {
+export class HoldingContextMenu {
   constructor(
     public dialogRef: MatDialogRef<HoldingContextMenu>) { }
 
-  ngOnInit() {
-    this.dialogRef.beforeClosed().subscribe(() => this.dialogRef.close());
-  }
-
-  onNoClick(): void {
-  }
-
   select(event) {
-    console.log(event);
+    this.dialogRef.close(event.srcElement.innerText)
   }
 
   fund_menu = [
-    { text: "Set Category" },
+    { text: "Add Broker" },
     { text: "Sell All" },
     { text: "Open in Focus" }
   ];

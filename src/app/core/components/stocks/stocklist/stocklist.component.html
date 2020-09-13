@@ -5,7 +5,9 @@
 <mat-expansion-panel hideToggle id="stocklist">
     <mat-expansion-panel-header style="background: darkgray" (contextmenu)="showContextMenu($event)">
         <mat-panel-title>
-            <h3>{{ category }}</h3>
+            <h3 class="allocation"><ejs-inplaceeditor #categoryTextBox id="element" mode="popup" [(value)]="category">
+
+            </ejs-inplaceeditor></h3>
         </mat-panel-title>
         <mat-panel-description style="align-items: center;">
             <div style="margin-left: auto; margin-right: 0" [ngClass]="{'over':(weight > desired + 0.07),'under':(weight < desired - 0.07)}">

@@ -3,7 +3,7 @@ import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { first } from 'rxjs/operators';
 import { UserdataService, ReadOnlyDatabaseService } from '../../../services';
 import { InPlaceEditorComponent } from '@syncfusion/ej2-angular-inplace-editor';
-import { NumericTextBoxModel } from '@syncfusion/ej2-inputs';
+import { NumericTextBoxModel, TextBoxModel } from '@syncfusion/ej2-inputs';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 
@@ -62,7 +62,7 @@ export class StocklistComponent implements OnInit {
     if (event.type == "init") {
       this.equity += event.equity;
     } else {
-      this.equity += event.shares * event.price;
+      this.equity += event.delta * event.price;
     }
     this.weight = this.equity / this.total_value * 100;
 
@@ -118,12 +118,45 @@ export class StocklistComponent implements OnInit {
     });
   }
 
+  @ViewChild('categoryTextBox')
+  public categoryTextBoxObj: InPlaceEditorComponent;
+
+  public categoryTextBoxModel: TextBoxModel = {
+    change: event => this.setCategoryName(event),
+  };
+
+  setCategoryName(event) {
+    this.change.emit({
+      type: "set_category_name",
+      old_name: this.category,
+      new_name: event.value
+    });
+    this.category = event.value;
+  }
+
+  // TODO: These require a different data model, it's not possible in the current approach
   showContextMenu(event) {
     event.stopPropagation();
     const dialogRef = this.dialog.open(StocklistContextMenu, {
       width: '200px'
     });
+
     dialogRef.afterClosed().subscribe(result => {
+      switch (result) {
+        case "Sort": {
+          console.log("TODO: Sort");
+          break;
+        }
+        case "Sell All": {
+          console.log("TODO: Sell All");
+          break;
+        }
+        case "Delete": {
+          console.log("TODO: Delete");
+          break;
+        }
+        default: {break;}
+      }
       console.log("Stocklist Context Menu");
       console.log(result);
     })
@@ -135,26 +168,18 @@ export class StocklistComponent implements OnInit {
   selector: 'stocklist_context_menu',
   templateUrl: './context_menu.html'
 })
-export class StocklistContextMenu implements OnInit {
+export class StocklistContextMenu {
   constructor(
     public dialogRef: MatDialogRef<StocklistContextMenu>) { }
 
-  ngOnInit() {
-    this.dialogRef.beforeClosed().subscribe(() => this.dialogRef.close());
-  }
-
-  onNoClick(): void {
-  }
-
   select(event) {
-    console.log(event);
+    this.dialogRef.close(event.srcElement.innerText);
   }
 
   stocklist_menu = [
     { text: "Sort" },
     { text: "Sell All" },
-    { text: "Delete" },
-    { text: "Rename" }
+    { text: "Delete" }
   ];
 
 }
