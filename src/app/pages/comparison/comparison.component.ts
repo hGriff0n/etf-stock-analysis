@@ -34,6 +34,10 @@ export class ComparisonComponent implements OnInit, OnDestroy {
 
   constructor(private plugins: PluginsService, private route: ActivatedRoute, private data: SecuritydataService) { }
 
+  test(event) {
+    console.log(event);
+  }
+
   ngOnInit() {
     this.route_sub = this.route.params.subscribe(params => {
       this.base = params['base'];
@@ -55,7 +59,7 @@ export class ComparisonComponent implements OnInit, OnDestroy {
   // options for the chart
   timeline = true;
   colorScheme = {
-    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+    domain: ['#cdb17e', '#19212a', '#716859', '#8c9496', '#463f38', '#8a8c94']
   };
   //pie
   showLabels = true;

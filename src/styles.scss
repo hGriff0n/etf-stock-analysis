@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-@import '~@angular/material/theming';
+// @import '~@angular/material/theming';
+@import './theme.scss';
 @import '~@angular/cdk/overlay-prebuilt.css';
 
 /* You can add global styles to this file, and also import other style files */
@@ -36,4 +37,76 @@ div.mat-expansion-panel-body {
 
 .cdk-overlay-0 {
   background: white;
+}
+
+.dashboard-card.holdings {
+  mat-list {
+    mat-list-item {
+      .mat-list-item-content {
+        justify-content: space-around;
+        width: 97%;
+
+        &:hover {
+          background-color: rgba(128,128,128,0.5);
+        }
+      }
+    }
+  }
+}
+
+.dashboard-card.overview-graphs, .dashboard-card.graphs-card {
+  .mat-tab-body-wrapper {
+    height: 100%;
+  }
+}
+
+.dashboard-card.fund-name {
+  display: flex;
+
+  .dashboard-card-content {
+    height: 100%;
+    width: 100%;
+
+    img {
+      height: max-content;
+      width: auto;
+      float: left;
+      margin: 10px;
+    }
+  }
+  div {
+    display: flex;
+    width: 93%;
+    justify-content: space-around;
+  }
+  .mat-tab-body-wrapper {
+    height: 100%;
+  }
+}
+
+.ng-star-inserted {
+  height: 100%;
+  width: 90%;
+}
+
+a {
+  color: orange;
+}
+
+.dashboard-card.comp-graphs {
+  figure {
+    margin-right: 50px;
+  }
+}
+
+.watchlist {
+  .mat-expansion-panel-content {
+    height: 90%;
+    .mat-expansion-panel-body {
+      height: 100%;
+      mat-list {
+        height: 100%;
+      }
+    }
+  }
 }

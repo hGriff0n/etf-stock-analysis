@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MatDividerModule } from '@angular/material/divider';
+import { InPlaceEditorModule } from '@syncfusion/ej2-angular-inplace-editor';
 
 import { ComparisonComponent } from './comparison.component';
 
@@ -26,6 +28,8 @@ import { ComparisonComponent } from './comparison.component';
     LayoutModule,
     NgxChartsModule,
     MatTabsModule,
+    MatDividerModule,
+    InPlaceEditorModule
   ],
   exports: [
     ComparisonComponent

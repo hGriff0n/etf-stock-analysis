@@ -1,14 +1,14 @@
 <div class="grid-container" style="height: 100%; margin: 0">
   <mat-grid-list cols="30" rowHeight="fit" style="height: 99vh">
     <mat-grid-tile [colspan]="15" [rowspan]="4">
-      <mat-card class="dashboard-card fund-name">
+      <mat-card class="dashboard-card fund-name" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px">
         <mat-card-content class="dashboard-card-content fund-name">
           <div>
             <!-- TODO: Formatting issues if image isn't exactly square -->
             <img src="https://storage.googleapis.com/iex/api/logos/{{ symbol | uppercase }}.png"
               style="display: inline-block; vertical-align: middle;" mat-card-image>
-            <div style="display: inline-block; padding-left: 15px; width: 75%">
-              <h1 style="margin-top: 0; margin-bottom: 15px">{{ fund_name | async }} ({{ symbol }})</h1>
+            <div style="display: inline-block; padding: 15px; width: 75%">
+              <h1 style="margin-top: 0; margin-bottom: 15px" (click)="changeFund()">{{ fund_name | async }} ({{ symbol }})</h1>
               <!-- industry -->
               <!-- sector -->
               <p style="overflow: hidden; max-height: 3.6em">{{ description | async }}</p>
@@ -22,10 +22,10 @@
     <!-- https://medium.com/agilix/change-the-route-without-reloading-in-angular-7a4aa82a8d3e -->
     <!-- ngSwitch -->
     <mat-grid-tile [colspan]="15" [rowspan]="16">
-      <mat-card class="dashboard-card graphs-card">
+      <mat-card class="dashboard-card graphs-card" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px">
         <mat-card-content class="dashboard-card-content graph-content" style="height:97%">
           <div>Graphs</div>
-          <mat-tab-group selectedIndex="1" class="fund-graph-tabs">
+          <mat-tab-group selectedIndex="1" class="fund-graph-tabs" style="height: 100%">
             <mat-tab label="History">
               <!-- Can use tabs with router? -->
               <!-- https://swimlane.github.io/ngx-charts/#/ngx-charts/number-card -->
@@ -52,7 +52,7 @@
 
     <!--  -->
     <mat-grid-tile [colspan]="9" [rowspan]="3">
-      <mat-card class="dashboard-card">
+      <mat-card class="dashboard-card" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px">
         <mat-card-content class="dashboard-card-content tags-container"
           style="display: flex; justify-content: space-around;">
           <a>{{ themes[0] }}</a>
@@ -73,21 +73,24 @@
     </mat-grid-tile>
 
     <mat-grid-tile [colspan]="6" [rowspan]="3">
-      <mat-card class="dashboard-card">
+      <mat-card class="dashboard-card" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px">
         <mat-card-content class="dashboard-card-content quote-card" style="transform: translateY(-6px)">
-          <div>
+          <div style="display: flex; justify-content: space-around; width: 82%; margin-bottom: 20px">
             <h1 style="margin: 0; width: fit-content; float: left">${{ price | async }}</h1>
-            <p style="margin: 0"><strong>${{ day_change | async }} ({{ day_change_pct | async }}%)</strong></p>
-            <!-- Can't do the "dollar increase" aspect with years -->
-            <p style="margin: 0">(YTD: {{ year_change | async }}%)</p>
-            <div style="padding-top: 10px">
-              <p style="width: fit-content; float: left; margin: 0">
-                <strong>Bid:</strong> {{ bid_quantity | async }} at ${{ bid_price | async }}
-              </p>
-              <p style="width: fit-content; float: right; margin: 0">
-                <strong>Ask:</strong> {{ ask_quantity | async }} at ${{ ask_price | async }}
-              </p>
+            <div style="height: fit-content; margin: 0">
+              <p style="margin: 0"><strong>${{ day_change | async }} ({{ day_change_pct | async }}%)</strong></p>
+              <!-- Can't do the "dollar increase" aspect with years -->
+              <p style="margin: 0">(YTD: {{ year_change | async }}%)</p>
             </div>
+          </div>
+          <div
+            style="padding-top: 10px;display: flex;justify-content: space-around;width: 80%;margin: 0;height: fit-content;padding: 0;">
+            <p style="width: fit-content; float: left; margin: 0">
+              <strong>Bid:</strong> {{ bid_quantity | async }} at ${{ bid_price | async }}
+            </p>
+            <p style="width: fit-content; float: right; margin: 0;">
+              <strong>Ask:</strong> {{ ask_quantity | async }} at ${{ ask_price | async }}
+            </p>
           </div>
         </mat-card-content>
       </mat-card>
@@ -97,7 +100,7 @@
     <!-- TODO: There's likely more information that could be gained here -->
     <!-- Should I include a "purchase" card here too? -->
     <mat-grid-tile [colspan]="15" [rowspan]="9">
-      <mat-card class="dashboard-card">
+      <mat-card class="dashboard-card" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px">
         <mat-card-content class="dashboard-card-content stats-card">
           <h1>Statistics</h1>
           <ul style="list-style: none;">
@@ -111,7 +114,7 @@
 
     <!-- TODO: These "news" stories look ugly -->
     <mat-grid-tile [colspan]="30" [rowspan]="12" *ngIf="!(is_etf_fund | async)">
-      <mat-card class="dashboard-card">
+      <mat-card class="dashboard-card" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px">
         <mat-card-content class="dashboard-card-content stock-news-list">
           <mat-grid-list cols="30" rowHeight="fit" style="height: 36vh" [gutterSize]="'10px'">
             <mat-grid-tile *ngFor="let story of news | async" [colspan]=5 [rowspan]=4>
@@ -130,8 +133,9 @@
     <!-- ngx-tree-map is a good way of visualizing constituents -->
     <!-- ngx-pie-grid would be a good way of displaying scores -->
     <mat-grid-tile [colspan]="30" [rowspan]="12" *ngIf="is_etf_fund | async">
-      <mat-card class="dashboard-card">
-        <mat-card-content class="dashboard-card-content etf-constituents-list" style="display: flex; justify-content: center;">
+      <mat-card class="dashboard-card" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px">
+        <mat-card-content class="dashboard-card-content etf-constituents-list"
+          style="display: flex; justify-content: center;">
           <!-- mat-table doesn't work for some reason (translates to comments) -->
           <table>
             <tr>

@@ -27,7 +27,7 @@ export class PortfolioComponent implements OnInit {
   }
 
   // scorecard?
-  // TODO: Hook up processors to actually update the values (5th)
+  // TODO: Hook up processors to actually update the values
   // TODO: Improve styling of values/labels
   // TODO: Introduce UI styling elements
     // multiple "pages", maybe in a carousel
@@ -59,7 +59,7 @@ export class PortfolioComponent implements OnInit {
     }
   ];
   colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+    domain: ['#cdb17e', '#19212a', '#716859', '#8c9496', '#463f38', '#8a8c94']
   };
   scorecardLabelFormatting(c): string {
     return `${c.label}`
@@ -102,7 +102,8 @@ export class PortfolioComponent implements OnInit {
 
   // fund tracking
   // TODO: Implement add external (ie. GOOG) dialog
-  // TODO: Need to split sold equity by broker (3RD)
+  // TODO: Need to split sold equity by broker
+    // Need to figure out UI for representing this
   brokerages = ["Robinhood"];
   fract_shares = 0;
   funds = {
@@ -173,15 +174,21 @@ export class PortfolioComponent implements OnInit {
   }
 
   // allocations
-  // TODO: Hook up context menu events to actually work on individual holdings/etc.
+  // TODO: Hook up context menu events to actually work on individual holdings/etc. (FST)
+    // How to buy shares from non-owned?
+  // TODO: Was the context menu issue because *I* wasn't stopping the event? (SND)
+    // Or rather should I make a "context" service and have components register into it
   // TODO: Improve UI density in stocklist components
     // Holding information can be scrunched a little bit more
     // Add some security information on holding hover
     // Add some extra category information to each theme
     // Add ability to annotate categories/holdings with "investment thesis" and priority
   newCategory(event) {
-    event.stopPropogation();
+    event.stopPropagation();
     this.categories = [...this.categories, "undefined"];
+    this.addModification({
+      type: "new_category"
+    });
   }
   categories: Array<string>;
   equity: number = 0;
@@ -281,7 +288,7 @@ export class AllocateFundsDialog implements OnInit {
   }
 
   colorScheme = {
-    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+    domain: ['#cdb17e', '#19212a', '#716859', '#8c9496', '#463f38', '#8a8c94']
   };
   showLabels = true;
 

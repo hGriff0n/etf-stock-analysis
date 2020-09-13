@@ -1,13 +1,14 @@
-mat-grid-tile {
-  background: lightblue;
+
+.allocation_block {
+   background: gray;
+
+   app-stocklist {
+     width: 100%;
+   }
 }
 
-app-stocklist {
-  width: 100%;
-}
-
-// .categories {
-// }
+// // .categories {
+// // }
 
 .mat-select-panel {
   background: #fff;
@@ -17,3 +18,17 @@ app-stocklist {
 .mat-form-field-appearance-fill {
   background-color: rgba(0,0,0,.04);
 }
+
+button {
+  height: min-content;
+}
+
+// #cdb17e
+// #19212a
+// #716859
+// #8c9496
+// #463f38
+// #8a8c94
+// #545d62
+// #946434
+// #4c5464

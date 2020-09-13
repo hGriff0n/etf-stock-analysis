@@ -2,27 +2,29 @@
 <mat-grid-list cols="16" rowHeight="2:1" gutterSize="10px" cdkDropListGroup>
   <mat-grid-tile colspan="5" rowspan="3">
     <div style="width: 100%; display: flex; justify-content: space-around;">
-      <div style="width: fit-content; height: 60%; display: grid; float: left; padding-right: 30px">
+      <!-- style="width: fit-content; height: 60%; display: grid; float: left; padding-right: 30px" -->
+      <div style="display: flex">
         <mat-form-field appearance="fill" [style.width.px]="200">
           <select matNativeControl required>
             <option value="total">Total</option>
             <option *ngFor="let broker of brokerages" [value]="broker">{{ broker | titlecase }}</option>
           </select>
         </mat-form-field>
-        <div style="display:flex">
-          <h2>${{ funds.available | number : '1.2' }}</h2>
-          <h4 style="margin-right: 20px">${{ funds.spent | number: '1.2' }}</h4>
-          <h4 style="margin-right: 20px">${{ funds.sold | number: '1.2' }}</h4>
+        <div>
+          <h2 style="margin: 0px">${{ funds.available | number : '1.2' }}</h2>
+          <h4 style="margin-right: 20px; padding-left: 10px; margin:0px">${{ funds.spent | number: '1.2' }}</h4>
+          <h4 style="margin-right: 20px; margin:0px">${{ funds.sold | number: '1.2' }}</h4>
         </div>
         <!-- TODO: Could actually give a little more information here -->
       </div>
-      <div style="display: grid; float: right">
+      <div style="display: grid; float: right; align-content: center;">
         <button mat-raised-button (click)="openAllocateFunds()">Allocate Funds</button>
         <button mat-raised-button (click)="openAddExternal()">Add External</button>
       </div>
     </div>
     <div style="width: 100%; display: flex; justify-content: space-around;">
-      <div style="width: fit-content"><strong>To Fractional Shares</strong></div>
+      <!-- style="width: fit-content" -->
+      <div><strong>To Fractional Shares</strong></div>
       <!-- TODO: The placeholders don't go away when -->
       <mat-form-field [style.width.px]=100>
         <input matInput placeholder="Security">
@@ -30,13 +32,13 @@
       <mat-form-field [style.width.px]=100>
         <input matInput placeholder="Amount">
       </mat-form-field>
-      <div style="width: auto">{{ fract_shares | number : '1.2' }} shares</div>
+      <!--  style="width: auto" -->
+      <div>{{ fract_shares | number : '1.2' }} shares</div>
     </div>
   </mat-grid-tile>
+  <!-- TODO: Not sure what to put here -->
   <mat-grid-tile colspan="6" rowspan="3">
-    <h1>Portfolio Planning<ng-container *ngIf="modifications">*</ng-container>
-      <!-- Maybe like a holding pen, to move holdings around in the same column -->
-    </h1>
+    <h1>Portfolio Planning</h1>
   </mat-grid-tile>
   <mat-grid-tile colspan="5" rowspan="3">
     <ngx-charts-number-card [scheme]="colorScheme" [results]="scorecard" [valueFormatting]="scorecardValueFormatting"
@@ -59,19 +61,26 @@
 
   <!-- Watch/search lists -->
   <mat-grid-tile colspan="4" rowspan="17">
-    <mat-accordion class="side-accordion" style="width: 100%; height: 100%">
-      <mat-expansion-panel hideToggle style="width: 100%">
-        <mat-expansion-panel-header style="background: darkgray">
-          <mat-panel-description style="align-items: center; text-align: center">
+    <!-- style="width: 100%; height: 100%" -->
+    <mat-accordion class="side-accordion" style="height:100%; width:95%; margin-right:20px">
+      <!-- style="width: 100%" -->
+      <mat-expansion-panel hideToggle>
+        <!-- style="background: darkgray" -->
+        <mat-expansion-panel-header>
+          <!-- style="align-items: center; text-align: center" -->
+          <mat-panel-description>
             <h3>Search</h3>
           </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-card>
-          <div style="width: 100%; display: flex; align-items: center; padding-bottom: 8px">
-            <input type="text" class="form-control" placeholder="Search" style="border: none; width: 100%"/>
+          <!-- style="width: 100%; display: flex; align-items: center; padding-bottom: 8px" -->
+          <div >
+            <!-- style="border: none; width: 100%" -->
+            <input type="text" class="form-control" placeholder="Search" />
           </div>
           <mat-divider></mat-divider>
-          <div #portfolioSearchResults style="padding-top: 10px">
+          <!-- style="padding-top: 10px" -->
+          <div #portfolioSearchResults >
             <!-- TODO: app-holding if we can identify a specific security -->
             <app-holding *ngFor="let symbol of possible_funds" [symbol]="symbol"></app-holding>
             <mat-card *ngFor="let article of news_articles"></mat-card>
@@ -79,16 +88,18 @@
         </mat-card>
       </mat-expansion-panel>
 
-      <mat-expansion-panel hideToggle [expanded]="true"  style="width: 100%; max-height: 100%;">
-        <mat-expansion-panel-header style="background: darkgray">
-          <mat-panel-description style="align-items: center; text-align: center">
+      <!--  style="width: 100%; max-height: 100%;" -->
+      <mat-expansion-panel hideToggle [expanded]="true" style="height: 95%" class="watchlist">
+        <!-- style="background: darkgray" -->
+        <mat-expansion-panel-header>
+          <!-- style="align-items: center; text-align: center" -->
+          <mat-panel-description>
             <h3>Watchlist</h3>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <mat-list style="height:800px; overflow: scroll">
-          <mat-list cdkDropList [cdkDropListData]="watchlist" (cdkDropListDropped)="addToWatchlist($event)">
-            <app-holding *ngFor="let w of watchlist" [symbol]="w.symbol"></app-holding>
-          </mat-list>
+        <!-- style="height:800px; overflow: scroll" -->
+        <mat-list cdkDropList [cdkDropListData]="watchlist" (cdkDropListDropped)="addToWatchlist($event)" style="overflow: scroll">
+          <app-holding *ngFor="let w of watchlist" [symbol]="w.symbol"></app-holding>
         </mat-list>
       </mat-expansion-panel>
 
