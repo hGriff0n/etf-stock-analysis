@@ -3,17 +3,7 @@
     <mat-grid-tile [colspan]="15" [rowspan]="4">
       <mat-card class="dashboard-card fund-name" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px">
         <mat-card-content class="dashboard-card-content fund-name">
-          <div>
-            <!-- TODO: Formatting issues if image isn't exactly square -->
-            <img src="https://storage.googleapis.com/iex/api/logos/{{ symbol | uppercase }}.png"
-              style="display: inline-block; vertical-align: middle;" mat-card-image>
-            <div style="display: inline-block; padding: 15px; width: 75%">
-              <h1 style="margin-top: 0; margin-bottom: 15px" (click)="changeFund()">{{ fund_name | async }} ({{ symbol }})</h1>
-              <!-- industry -->
-              <!-- sector -->
-              <p style="overflow: hidden; max-height: 3.6em">{{ description | async }}</p>
-            </div>
-          </div>
+          <app-funddesc [symbol]="symbol" [description]="description" [fund_name]="fund_name" (fund_click)="changeFund()"></app-funddesc>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

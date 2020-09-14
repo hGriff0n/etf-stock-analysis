@@ -13,6 +13,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { InPlaceEditorModule } from '@syncfusion/ej2-angular-inplace-editor';
 
 import { ComparisonComponent } from './comparison.component';
+import { FunddescModule } from '../../core/components/funddesc/funddesc.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ComparisonComponent } from './comparison.component';
     NgxChartsModule,
     MatTabsModule,
     MatDividerModule,
-    InPlaceEditorModule
+    InPlaceEditorModule,
+    FunddescModule
   ],
   exports: [
     ComparisonComponent

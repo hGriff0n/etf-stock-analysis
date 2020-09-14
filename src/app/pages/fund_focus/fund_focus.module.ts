@@ -13,8 +13,12 @@ import { MatSelectModule } from '@angular/material/select'
 import { OverlayModule } from '@angular/cdk/overlay';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 import { FundFocusComponent } from './fund_focus.component';
+import { FunddescModule } from '../../core/components/funddesc/funddesc.module';
 
 @NgModule({
   declarations: [
@@ -27,13 +31,17 @@ import { FundFocusComponent } from './fund_focus.component';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
+    MatInputModule,
     LayoutModule,
     MatChipsModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatSelectModule,
     OverlayModule,
     NgxChartsModule,
     MatTabsModule,
+    FormsModule,
+    FunddescModule
   ],
   exports: [
     FundFocusComponent

@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PluginsService, SecuritydataService } from '../../core/services';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { SwitchFundDialog } from '../../core/components/funddesc/funddesc.component';
 
 /*
 Allows users to compare two different securities against each other
@@ -32,10 +34,29 @@ export class ComparisonComponent implements OnInit, OnDestroy {
   comp_fund: Fund;
   private route_sub: any;
 
-  constructor(private plugins: PluginsService, private route: ActivatedRoute, private data: SecuritydataService) { }
+  constructor(private plugins: PluginsService, private route: ActivatedRoute, private data: SecuritydataService, private router: Router, public dialog: MatDialog) { }
 
   test(event) {
     console.log(event);
+  }
+
+  switchFund(event) {
+    const dialogRef = this.dialog.open(SwitchFundDialog, {
+      width: '300px',
+      data: { fund: event }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.fund == event) {
+        return;
+      }
+
+      if (event == this.base) {
+        this.router.navigate([`/compare/${result.fund}/${this.replace}`]);
+      } else {
+        this.router.navigate([`/compare/${this.base}/${result.fund}`]);
+      }
+    });
   }
 
   ngOnInit() {

@@ -4,12 +4,7 @@
     <mat-grid-tile [colspan]="15" [rowspan]="4">
       <mat-card class="dashboard-card fund-name" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px; display: flex; align-content: center;">
         <mat-card-content class="dashboard-card-content fund-name" style="width: 95%">
-          <img src="https://storage.googleapis.com/iex/api/logos/{{ base | uppercase }}.png"
-            style="display: inline-block; vertical-align: middle; margin: 10px !important" mat-card-image>
-          <div style="display: flow-root; float: right; padding: 15px; width: 75%;">
-            <h1 style="margin-top: 0; margin-bottom: 15px" (click)="switchFund(base_fund)">{{ base_fund.fund_name | async }} ({{ base }})</h1>
-            <p style="overflow: hidden; max-height: 3.6em">{{ base_fund.description | async }}</p>
-          </div>
+          <app-funddesc [symbol]="base" [description]="base_fund.description" [fund_name]="base_fund.fund_name" (fund_click)="switchFund(base)"></app-funddesc>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
@@ -19,12 +14,7 @@
     <mat-grid-tile [colspan]="15" [rowspan]="4">
       <mat-card class="dashboard-card fund-name" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px; display: flex; align-content: center;">
         <mat-card-content class="dashboard-card-content fund-name" style="width: 95%">
-            <img src="https://storage.googleapis.com/iex/api/logos/{{ replace | uppercase }}.png"
-              style="display: inline-block; vertical-align: middle;" mat-card-image>
-            <div style="display: flow-root; padding: 15px; width: 75%;">
-              <h1 style="margin-top: 0; margin-bottom: 15px">{{ comp_fund.fund_name | async }} ({{ replace }})</h1>
-              <p style="overflow: hidden; max-height: 3.6em">{{ comp_fund.description | async }}</p>
-            </div>
+          <app-funddesc [symbol]="replace" [description]="comp_fund.description" [fund_name]="comp_fund.fund_name" (fund_click)="switchFund(replace)"></app-funddesc>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>

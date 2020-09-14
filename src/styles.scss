@@ -110,3 +110,13 @@ a {
     }
   }
 }
+
+h1.fund-name:hover {
+  text-shadow: 2px 2px black;
+}
+
+mat-action-list {
+  .mat-list-text {
+  color: black !important;
+  }
+}

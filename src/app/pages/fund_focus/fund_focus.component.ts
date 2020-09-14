@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PluginsService, SecuritydataService, UserdataService } from '../../core/services';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { News } from 'node-iex-cloud/lib/types';
+import { MatDialog } from '@angular/material/dialog';
+import { SwitchFundDialog } from '../../core/components/funddesc/funddesc.component';
 
 /*
 Viewing portal to get information about a specific security
@@ -33,10 +35,25 @@ export class FundFocusComponent implements OnInit, OnDestroy {
     { title: 'Unknown Other', cols: 30, rows: 12 }
   ];
 
+  changeFund() {
+    const dialogRef = this.dialog.open(SwitchFundDialog, {
+      width: '300px',
+      data: { fund: this.symbol }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.fund != this.symbol) {
+        console.log(`Navigating to ${result.fund}`);
+        this.router.navigate([`/fund-focus/${result.fund}`]);
+      }
+      console.log(result.fund);
+    });
+  }
+
   symbol: string;
   private route_sub: any;
 
-  constructor(private route: ActivatedRoute, private data: SecuritydataService, private user: UserdataService) {
+  constructor(private route: ActivatedRoute, private router: Router, private data: SecuritydataService, private user: UserdataService, public dialog: MatDialog) {
     // TODO: This needs to be a multi-way communication
     // this.themes = this.user.themes;
     this.themes = [];
@@ -49,7 +66,6 @@ export class FundFocusComponent implements OnInit, OnDestroy {
   themes: string[];
   selected_theme: string;
   setTheme(event) {
-    // console.log(event.value);
     if (event.value == this.NEW_THEME_SELECTOR_VALUE) {
       // MatDialog
       return;
@@ -156,7 +172,7 @@ export class FundFocusComponent implements OnInit, OnDestroy {
   // options for the chart
   timeline = true;
   colorScheme = {
-    domain: ['#9370DB', '#87CEFA', '#FA8072', '#FF7F50', '#90EE90', '#9370DB']
+    domain: ['#cdb17e', '#19212a', '#716859', '#8c9496', '#463f38', '#8a8c94']
   };
   //pie
   showLabels = true;
