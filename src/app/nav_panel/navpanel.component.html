@@ -14,7 +14,7 @@
             <!-- TODO: AppDrawer should open closed by default -->
             <a mat-list-item>
                 <mat-icon mat-list-icon (click)="appDrawer.toggle()">search</mat-icon>
-                <input matLine id="search" type="search" (keyup)="searchTerm$.next($event.target.value)"/>
+                <input matLine id="search" type="search" [(ngModel)]="searchTerm" (keyup.enter)="appDrawer.toggle(); submit()"/>
             </a>
 
             <a mat-list-item routerLink="/overview" routerLinkActive="active">
