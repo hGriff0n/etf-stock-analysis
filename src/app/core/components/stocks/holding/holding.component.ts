@@ -17,6 +17,8 @@ export class StockHoldingComponent implements OnInit {
 
   @Input()
   symbol = "";
+  @Input()
+  enableContextMenu = true;
 
   brokerages = {}
 
@@ -82,6 +84,10 @@ export class StockHoldingComponent implements OnInit {
   // Context Menu
   showContextMenu(event) {
     event.stopPropagation();
+    if (!this.enableContextMenu) {
+      return;
+    }
+
     const dialogRef = this.dialog.open(HoldingContextMenu, {
       width: '200px'
     });

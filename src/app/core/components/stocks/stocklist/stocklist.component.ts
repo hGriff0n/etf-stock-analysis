@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
 import { first } from 'rxjs/operators';
 import { UserdataService, ReadOnlyDatabaseService } from '../../../services';
 import { InPlaceEditorComponent } from '@syncfusion/ej2-angular-inplace-editor';
@@ -81,7 +81,17 @@ export class StocklistComponent implements OnInit {
   }
 
   drop(event) {
-    if (event.previousContainer === event.container) {
+    // TODO: Moving from search is "technically" more complicated than this (fund could be in other theme already)
+    if (event.previousContainer.element.nativeElement.classList.value.indexOf("search-results") != -1) {
+      copyArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+      this.change.emit({
+        type: "set_theme",
+        symbol: event.container.data[event.currentIndex].symbol,
+        category: this.category
+      });
+      event.container.data[event.currentIndex] = { symbol: event.container.data[event.currentIndex] };
+
+    } else if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       this.exit(event);
@@ -89,7 +99,6 @@ export class StocklistComponent implements OnInit {
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
-      console.log(event);
       this.change.emit({
         type: "set_theme",
         symbol: event.container.data[event.currentIndex].symbol,

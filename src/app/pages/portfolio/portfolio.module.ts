@@ -15,11 +15,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { MatDialogModule } from '@angular/material/dialog';
 
-// import { SatPopoverModule } from '@ncstate/sat-popover';
 import { PortfolioComponent, TernaryFilterPipe, AllocateFundsDialog, AddExternalDialog } from './portfolio.component';
 import { StocksModule } from '../../core/components/stocks/stocks.module';
-import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
