@@ -95,7 +95,7 @@
     "algotrader": "2.5.4",
     "angular-material-rail-drawer": "0.0.6",
     "ng-sidebar": "9.3.0",
-    "node-fetch": "2.6.0",
+    "node-fetch": "2.6.1",
     "node-iex-cloud": "2.0.31"
   }
 }
