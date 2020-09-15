@@ -20,7 +20,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/@syncfusion/ej2-angular-inplace-editor/styles/material.css",
+              "node_modules/@syncfusion/ej2-inputs/styles/material.css",
             ],
             "scripts": [],
             "customWebpackConfig": {

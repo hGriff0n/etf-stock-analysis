@@ -1,0 +1,8 @@
+
+<mat-tab-group selectedIndex="1" class="graphs-tab-group" [headerPosition]="tabPosition">
+    <mat-tab *ngFor="let child of children" [label]="child.label">
+        <div class="graph-container">
+            <ng-container *ngTemplateOutlet="child.template"></ng-container>
+        </div>
+    </mat-tab>
+</mat-tab-group>

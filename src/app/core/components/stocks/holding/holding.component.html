@@ -1,0 +1,16 @@
+<mat-expansion-panel hideToggle style="max-width: 500px;" cdkDrag id="holding">
+    <mat-expansion-panel-header style="height: fit-content" (contextmenu)="showContextMenu($event)">
+        <mat-panel-title>
+            <h3>{{ symbol }}</h3>
+            <!-- <div>{{ name }}</div> -->
+        </mat-panel-title>
+        <mat-panel-description>
+            <!-- <div>{{ quantity }} shares</div> -->
+            <div>${{ equity | number: '1.2' }}</div>
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <mat-list dense style="background: lightgray">
+        <app-broker *ngFor="let broker of brokerages | keyvalue"
+            [broker]="broker.key" [held]="broker.value.initial_shares" (change)="onChange($event)"></app-broker>
+    </mat-list>
+</mat-expansion-panel>

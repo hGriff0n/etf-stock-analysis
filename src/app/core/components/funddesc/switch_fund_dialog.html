@@ -1,0 +1,10 @@
+<mat-card style="background-color: white;">
+    <h1 mat-dialog-title>Fund</h1>
+    <div style="display:flex">
+        <mat-form-field style="width: 100%; display: flex; margin:15px">
+            <input matInput [(ngModel)]="data.fund"
+                style="padding: 10px; border: 1px solid #ccc; background-color: #fff; color: black">
+            <button mat-raised-button (click)="close()">Submit</button>
+        </mat-form-field>
+    </div>
+</mat-card>

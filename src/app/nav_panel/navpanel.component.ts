@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { PluginsService, SearchService } from '../core/services';
+import { PluginsService } from '../core/services';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import * as op from 'rxjs/operators';
 
 /*
 Navigation side bar for navigating around the application
@@ -25,9 +27,15 @@ export class NavPanelComponent {
 
   search_results: Object;
   searchTerm$ = new Subject<string>();
+  searchTerm = "";
 
-  constructor(private plugins: PluginsService, private search: SearchService) {
-    this.search.search(this.searchTerm$)
-      .subscribe(results => { this.search_results = results; });
+  constructor(private plugins: PluginsService, private router: Router) {
+    // this.search.search(this.searchTerm$)
+    //   .subscribe(results => { this.router.navigate([`/fund-focus/${result}`]); });
+  }
+
+  submit() {
+    this.router.navigate([`/fund-focus/${this.searchTerm}`]);
+    this.searchTerm = "";
   }
 }

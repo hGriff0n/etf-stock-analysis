@@ -1,0 +1,91 @@
+<div class="grid-container" style="height: 100%; margin: 0">
+  <mat-grid-list cols="30" rowHeight="fit" style="height: 99vh">
+    <!-- TODO: Will likely be 'easier' to reuse if divide grid into 3 colums instead -->
+    <mat-grid-tile [colspan]="15" [rowspan]="4">
+      <mat-card class="dashboard-card fund-name" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px; display: flex; align-content: center;">
+        <mat-card-content class="dashboard-card-content fund-name" style="width: 95%">
+          <app-funddesc [symbol]="base" [description]="base_fund.description" [fund_name]="base_fund.fund_name" (fund_click)="switchFund(base)"></app-funddesc>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <!-- TODO: Radar graph of comparison dimensions here -->
+
+    <mat-grid-tile [colspan]="15" [rowspan]="4">
+      <mat-card class="dashboard-card fund-name" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px; display: flex; align-content: center;">
+        <mat-card-content class="dashboard-card-content fund-name" style="width: 95%">
+          <app-funddesc [symbol]="replace" [description]="comp_fund.description" [fund_name]="comp_fund.fund_name" (fund_click)="switchFund(replace)"></app-funddesc>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="30" [rowspan]="10">
+      <mat-card class="dashboard-card comp-graphs" style="height: 100%; margin: 10px; margin-left: 100px; margin-right: 90px; max-width: 95%; width: 100%">
+        <mat-card-content class="dashboard-card-content comparison-graphs" style="height:97%">
+          <mat-tab-group selectedIndex="1" class="fund-graph-tabs" headerPosition="below" style="height: 100%">
+            <mat-tab label="Regions">
+              <div class="base-graph" style="width:45%; float: left">
+                <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
+                  <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="single" gradient="false" xAxis="true"
+                    yAxis="true" showXAxisLabel="true" showYAxisLabel="true" xAxisLabel="Country"
+                    yAxisLabel="GDP Per Capita">
+                  </ngx-charts-bar-vertical>
+                </div>
+              </div>
+
+              <!-- TODO: Create separate graphs for each fund -->
+              <div class="comp-graph" style="width:45%; float: right">
+                <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
+                  <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="single" gradient="false" xAxis="true"
+                    yAxis="true" showXAxisLabel="true" showYAxisLabel="true" xAxisLabel="Country"
+                    yAxisLabel="GDP Per Capita">
+                  </ngx-charts-bar-vertical>
+                </div>
+              </div>
+            </mat-tab>
+            <mat-tab label="Makeup">
+              <div class="base-graph" style="width:45%; float: left">
+                <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
+                  <ngx-charts-pie-chart [scheme]="colorScheme" [results]="single" legend="false" explodeSlices="false"
+                    doughnut="true" gradient="false">
+                  </ngx-charts-pie-chart>
+                </div>
+              </div>
+
+              <div class="comp-graph" style="width:45%; float: right">
+                <div style="height: 100%; display: flex; justify-content: center; align-items: center;">
+                  <ngx-charts-pie-chart [scheme]="colorScheme" [results]="single" legend="false" explodeSlices="false"
+                    doughnut="true" gradient="false">
+                  </ngx-charts-pie-chart>
+                </div>
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+
+    <!-- Alternative: Display "This fund is best at X for each fund" <- but I need to know base correlations -->
+    <!-- Alternative: Display "How would this fund affect the makeup of the portfolio" -->
+    <mat-grid-tile [colspan]="30" [rowspan]="7">
+      <mat-card class="dashboard-card" style="height: 100%; width: 100%; margin: 10px; margin-left: 100px">
+        <mat-card-content class="dashboard-card-content comparison-details"
+          style="display: flex; justify-content: center;">
+          <div>Details Comp</div>
+          <table>
+            <tr>
+              <th>{{ base }}</th>
+              <th>Metric</th>
+              <th>{{ replace }}</th>
+            </tr>
+            <tr>
+              <td>foo</td>
+              <td>foo</td>
+              <td>foo</td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

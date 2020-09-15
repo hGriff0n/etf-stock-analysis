@@ -1,0 +1,18 @@
+.mat-list-base {
+    padding-top: 0;
+}
+
+.mat-list {
+    max-height: 400px;
+    overflow: scroll;
+}
+
+.allocation {
+    .e-editable-value {
+        margin: 0
+    }
+
+    .e-editable-overlay-icon {
+        display: none;
+    }
+}

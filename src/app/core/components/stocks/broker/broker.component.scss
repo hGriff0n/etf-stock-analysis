@@ -1,0 +1,44 @@
+
+.e-hide {
+    visibility: hidden !important;
+    display: none !important;
+}
+
+.e-editable-action-buttons {
+    visibility: hidden !important;
+    display: none !important;
+}
+
+// This only works in styles.scss for some reason
+// input.e-numeric-hidden {
+//     visibility: hidden;
+//     display: none;
+// }
+
+.broker-split {
+    .mat-list-item-content {
+        justify-content: space-around;
+        background: lightgrey;
+        height: fit-content;
+    }
+    .mat-list-item-ripple {
+        height: fit-content;
+    }
+
+    .broker-name {
+        width: 50%;
+    }
+}
+
+.e-editable-overlay-icon.e-icons {
+    display: none !important;
+}
+
+.e-editable-value {
+    margin: 0 !important;
+    padding-right: 0 !important;
+}
+
+.context:hover {
+    background: rgba(0,0,0,.04);
+}

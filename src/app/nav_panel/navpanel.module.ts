@@ -11,6 +11,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavPanelComponent } from './navpanel.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { InAppMenuLinkModule } from './page_link/page_link.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { InAppMenuLinkModule } from './page_link/page_link.module';
     MatButtonToggleModule,
     AppRoutingModule,
     InAppMenuLinkModule,
+    FormsModule
   ],
   exports: [
       NavPanelComponent

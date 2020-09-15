@@ -1,0 +1,7 @@
+<mat-card style="background-color: white;">
+    <mat-action-list dense>
+        <button mat-list-item *ngFor="let item of holdings_menu" (click)="select($event)" id="context" style="color: black">
+            {{ item.text }}
+        </button>
+    </mat-action-list>
+</mat-card>

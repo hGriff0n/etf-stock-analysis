@@ -1,0 +1,10 @@
+<!-- TODO: Formatting issues if image isn't exactly square -->
+<img src="https://storage.googleapis.com/iex/api/logos/{{ symbol | uppercase }}.png"
+    style="display: inline-block; vertical-align: middle;" mat-card-image>
+<div style="display: inline-block; padding: 15px; width: 75%">
+    <h1 class="fund-name" style="margin-top: 0; margin-bottom: 15px; cursor: pointer" (click)="changeFund()">
+        {{ fund_name | async }} ({{ symbol }})</h1>
+    <!-- industry -->
+    <!-- sector -->
+    <p class="fund-desc" style="overflow: hidden; max-height: 3.6em">{{ description | async }}</p>
+</div>
